@@ -16,8 +16,9 @@
         android:theme="@style/Theme.WeatherApp"
         tools:targetApi="31">
         <activity
-            android:name=".WeatherView"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

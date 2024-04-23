@@ -2,4 +2,11 @@
     <string name="app_name">weatherApp</string>
     <string name="temperature"> </string>
     <string name="cityName"> </string>
+    <string name="minTemp">Min: </string>
+    <string name="maxTemp">Max: </string>
+    <string name="pressure">CISNIENIE</string>
+    <string name="humidity">WILGOTNOSĆ</string>
+    <string name="wind">PRĘD. WIATRU</string>
+    <string name="rainingChance">OPADY</string>
+    <string name="clouds">ZACHMURZENIE</string>
 </resources>

@@ -33,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
+
 }
 
 dependencies {
@@ -44,7 +48,16 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation ("com.squareup.moshi:moshi:1.12.0")
 
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.navigation:navigation-fragment:2.7.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+
     annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation ("com.google.android.material:material:1.1.0-alpha08")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0-beta02")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

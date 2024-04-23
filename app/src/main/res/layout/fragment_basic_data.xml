@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/gray">
+
+    <LinearLayout
+        android:id="@+id/firstView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cityName"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="city"
+            android:layout_gravity="center"
+            android:textSize="40sp"/>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeStepGranularity="2sp"
+            android:fontFamily="sans-serif"
+            android:text="12:24"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/temperature"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="40sp"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/clear"
+            android:padding="15dp" />
+
+        <TextView
+            android:id="@+id/overallStatus"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:text=""
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/minText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minTemp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/tempMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:fontFamily="sans-serif"
+                android:textColor="@color/white"/>
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/textMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/maxTemp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/tempMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="30°C"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/sunrise"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="WSCHÓD"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView android:id="@+id/sunrise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/sunset"/>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="ZACHÓD"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView android:id="@+id/sunset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
