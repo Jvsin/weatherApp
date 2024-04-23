@@ -19,15 +19,16 @@ class ForecastFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
-//        val cityName = "Warszau"
-//        val temperature = "12°C"
-//        val weatherDescription = "Not funny"
+        val tempFirstDay = arguments?.getString("tempFirstDay")
+        val tempSecondDay = arguments?.getString("tempSecondDay")
+        val tempThirdDay = arguments?.getString("tempThirdDay")
+        val thirdDay = arguments?.getString("thirdDayDate")
 
-//        // Wyświetl dane na widoku
-//        view.findViewById<TextView>(R.id.cityName).text = "Warszau"
-//        view.findViewById<TextView>(R.id.temperature).text = "12°C"
-//        view.findViewById<TextView>(R.id.overallStatus).text = "Not funny"
+        view.findViewById<TextView>(R.id.nextDayTemp).text = tempFirstDay
+        view.findViewById<TextView>(R.id.secondDayTemp).text = tempSecondDay
+        view.findViewById<TextView>(R.id.thirdDayTemp).text = tempThirdDay
+        view.findViewById<TextView>(R.id.thirdDay).text = thirdDay
     }
 }

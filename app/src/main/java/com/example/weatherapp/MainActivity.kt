@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.databinding.BasicDataBinding
@@ -31,7 +32,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        fetchWeather()
+        fetchForecast()
 
+    }
+    private fun fetchWeather(){
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
         val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey&lang=pl"
 
@@ -62,8 +67,39 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
 
-        addFragment(R.id.fragment_forecast, ForecastFragment())
+    private fun fetchForecast() {
+        val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
+        val url = "https://api.openweathermap.org/data/2.5/forecast?q=$location&appid=$apiKey&lang=pl"
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.v("dupa","failure")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val json = response.body?.string()
+                if (json != null) {
+                    Log.v("dupa", json )
+                }
+                if (response.isSuccessful && json != null) {
+                    val forecast: forecastClass = Gson().fromJson(json, forecastClass::class.java)
+                    val outputJson: String = Gson().toJson(forecast)
+                    Log.v("dupa1", "output json forecast: " + outputJson)
+                    runOnUiThread {
+                        setForecastFrag(forecast)
+                    }
+                } else {
+                    Log.v("dupa","tutaj sie wywala")
+                }
+            }
+        })
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
@@ -101,6 +137,21 @@ class MainActivity : AppCompatActivity() {
         additionalDataFrag.arguments = bundle
         addFragment(R.id.fragment_additional_data, additionalDataFrag)
     }
+
+    private fun setForecastFrag(forecast : forecastClass) {
+        val forecastFrag = ForecastFragment()
+        val bundle = Bundle()
+
+        bundle.putString("tempFirstDay",temperatureConvert(forecast.list[4].main.temp))
+        bundle.putString("firstDayDate",dateTimeStamp(forecast.list[4].dt.toLong(), forecast.city.timezone))
+        bundle.putString("tempSecondDay",temperatureConvert(forecast.list[12].main.temp))
+        bundle.putString("secondDayDate",dateTimeStamp(forecast.list[12].dt.toLong(), forecast.city.timezone))
+        bundle.putString("tempThirdDay",temperatureConvert(forecast.list[20].main.temp))
+        bundle.putString("thirdDayDate",dateTimeStamp(forecast.list[20].dt.toLong(), forecast.city.timezone))
+
+        forecastFrag.arguments = bundle
+        addFragment(R.id.fragment_forecast, forecastFrag)
+    }
     private fun timeStampConvert(time: Long, timezone: Int) : String {
         val date = Date(time * 1000)
 
@@ -125,6 +176,29 @@ class MainActivity : AppCompatActivity() {
         dateFormat.timeZone = TimeZone.getTimeZone(timeZone)
 
         return dateFormat.format(date)
+    }
+
+    private fun dateTimeStamp(time: Long, timezone: Int) : String {
+        val date = Date(time * 1000)
+
+        val hours = timezone / 3600
+        val minutes = (timezone % 3600) / 60
+        val timeZone = String.format("GMT%+d:%02d", hours, minutes)
+
+        val dateFormat = SimpleDateFormat("EEEE")
+        dateFormat.timeZone = TimeZone.getTimeZone(timeZone)
+
+        var result = " "
+        when(dateFormat.format(date)){
+            "Monday" -> result = "Poniedziałek"
+            "Tuesday" -> result = "Wtorek"
+            "Wednesday" -> result = "Środa"
+            "Thursday" -> result = "Czwartek"
+            "Friday" -> result = "Piątek"
+            "Saturday" -> result = "Sobota"
+            "Sunday" -> result = "Niedziela"
+        }
+        return result
     }
 
     private fun temperatureConvert(kelvin: Double) : String {

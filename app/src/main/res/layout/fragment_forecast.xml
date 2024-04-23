@@ -79,6 +79,7 @@
                 android:src="@drawable/pressure" />
 
             <TextView
+                android:id="@+id/thirdDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
@@ -86,7 +87,7 @@
                 android:textColor="@color/white"/>
 
             <TextView
-                android:id="@+id/lastDayTemp"
+                android:id="@+id/thirdDayTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
