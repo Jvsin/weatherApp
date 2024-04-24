@@ -36,7 +36,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/clear"
+            android:src="@drawable/snow"
             android:padding="15dp" />
         <TextView
             android:id="@+id/overallStatus"

@@ -43,10 +43,11 @@
             android:textSize="40sp"/>
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/weatherIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/clear"
+            android:src="@drawable/thunderstorm"
             android:padding="15dp" />
 
         <TextView

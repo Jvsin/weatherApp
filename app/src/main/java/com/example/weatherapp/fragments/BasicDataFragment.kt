@@ -23,6 +23,7 @@ import com.example.weatherapp.dataForecast.forecastClass
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
 import android.app.Activity
+import android.widget.ImageView
 
 class BasicDataFragment : Fragment() {
 
@@ -43,6 +44,7 @@ class BasicDataFragment : Fragment() {
         val maxTemp = arguments?.getString("maxTemp")
         val sunrise = arguments?.getString("sunrise")
         val sunset = arguments?.getString("sunset")
+        val weatherID = arguments?.getString("weatherID")
 
         view.findViewById<TextView>(R.id.cityName).text = city
         view.findViewById<TextView>(R.id.temperature).text = temp
@@ -52,5 +54,22 @@ class BasicDataFragment : Fragment() {
         view.findViewById<TextView>(R.id.tempMax).text = maxTemp
         view.findViewById<TextView>(R.id.sunrise).text = sunrise
         view.findViewById<TextView>(R.id.sunset).text = sunset
+        if (weatherID != null) {
+            setWeatherIcon(view, weatherID)
+        }
+    }
+
+    private fun setWeatherIcon(view: View, id: String) {
+        when(id){
+            "800" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.sun)
+            "801" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.few_clouds)
+            "802" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.scattered_clouds)
+            "803" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.broken_clouds)
+            "521" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.shower_rain)
+            "500" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.rain)
+            "211" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.thunderstorm)
+            "601" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.snow)
+            "701" -> view.findViewById<ImageView>(R.id.weatherIcon).setImageResource(R.drawable.mist)
+        }
     }
 }

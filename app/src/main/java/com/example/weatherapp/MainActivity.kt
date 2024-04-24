@@ -115,6 +115,7 @@ class MainActivity : AppCompatActivity() {
         bundle.putString("city", weather.name)
         bundle.putString("temperature", temperatureConvert(weather.main.temp))
         bundle.putString("status", weather.weather[0].description)
+        bundle.putString("weatherID", weather.weather[0].id.toString())
         bundle.putString("time", timeStampConvert(weather.dt.toLong(), weather.timezone))
         bundle.putString("minTemp", temperatureConvert(weather.main.temp_min))
         bundle.putString("maxTemp", temperatureConvert(weather.main.temp_max))
