@@ -4,13 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_weather"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/adding"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Warszawa"
-        android:layout_centerInParent="true"/>
+        android:orientation="horizontal"
+        android:weightSum="6"
+        >
+        <LinearLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:padding="8dp">
+            <EditText
+                android:id="@+id/location_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Wprowadź lokalizacje"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="8dp">
+            <Button
+                android:id="@+id/add_location_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dodaj"
+                android:autoSizeTextType="uniform"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cityList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/adding">
+<!--        <Button-->
+<!--            android:id="@+id/test"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="miasto "-->
+<!--            android:autoSizeTextType="uniform"-->
+<!--            />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/cityList"
+        android:weightSum="6">
+        <Button
+            android:id="@+id/changeUnits"
+            android:text="@string/changeUnits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+        <Button
+            android:id="@+id/fetchData"
+            android:text="@string/fetchData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:autoSizeTextType="uniform"
+            />
+        <Button
+            android:id="@+id/deleteCity"
+            android:text="@string/deleteCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:autoSizeTextType="uniform"/>
+    </LinearLayout>
 
 </RelativeLayout>

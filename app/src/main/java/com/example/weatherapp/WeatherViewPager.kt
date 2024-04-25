@@ -23,80 +23,16 @@ import java.util.TimeZone
 
 class WeatherViewPager : AppCompatActivity() {
 
-    val location : String = "Warsaw"
+    private var location : String = ""
     private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
+        location = intent.getStringExtra("location").toString()
 
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = ViewPagerAdapter(this, location)
-    }
-    private fun fetchWeather(){
-        val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
-        val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey&lang=pl"
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.v("dupa", "failure")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val json = response.body?.string()
-                if (json != null) {
-                    Log.v("dupa", json)
-                }
-                if (response.isSuccessful && json != null) {
-                    val weather = Gson().fromJson(json, weatherClass::class.java)
-                    val outputJson: String = Gson().toJson(weather)
-                    runOnUiThread {
-                        setBasicFrag(weather)
-                        setAdditionalFrag(weather)
-                    }
-                } else {
-                    Log.v("dupa", "tutaj sie wywala")
-                }
-            }
-        })
-    }
-
-    private fun fetchForecast() {
-        val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
-        val url = "https://api.openweathermap.org/data/2.5/forecast?q=$location&appid=$apiKey&lang=pl"
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.v("dupa","failure")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val json = response.body?.string()
-                if (json != null) {
-                    Log.v("dupa", json )
-                }
-                if (response.isSuccessful && json != null) {
-                    val forecast: forecastClass = Gson().fromJson(json, forecastClass::class.java)
-                    val outputJson: String = Gson().toJson(forecast)
-                    Log.v("dupa1", "output json forecast: " + outputJson)
-                    runOnUiThread {
-                        setForecastFrag(forecast)
-                    }
-                } else {
-                    Log.v("dupa","tutaj sie wywala")
-                }
-            }
-        })
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {

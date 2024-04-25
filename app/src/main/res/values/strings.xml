@@ -11,4 +11,8 @@
     <string name="clouds">ZACHMURZENIE</string>
     <string name="tomorrow">Jutro</string>
     <string name="secondDay">Pojutrze</string>
+    <string name="fetchNewData">Pobierz najnowsze dane</string>
+    <string name="fetchData">Pobierz dane</string>
+    <string name="changeUnits">Zmień jednostki</string>
+    <string name="deleteCity">Usuń miasto</string>
 </resources>
