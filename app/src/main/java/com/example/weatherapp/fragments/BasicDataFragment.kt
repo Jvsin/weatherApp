@@ -46,6 +46,12 @@ class BasicDataFragment : Fragment() {
         val sunset = arguments?.getString("sunset")
         val weatherID = arguments?.getString("weatherID")
 
+        Log.v("basic", city.toString())
+        Log.v("basic", temp.toString())
+        Log.v("basic", status.toString())
+        Log.v("basic", time.toString())
+
+
         view.findViewById<TextView>(R.id.cityName).text = city
         view.findViewById<TextView>(R.id.temperature).text = temp
         view.findViewById<TextView>(R.id.overallStatus).text = status

@@ -13,86 +13,125 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="8dp">
             <ImageView
+                android:id="@+id/weatherIconFirst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/pressure" />
+                android:src="@drawable/scattered_clouds" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="Jutro"
-                android:textColor="@color/white"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/nextDayTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:text="27°C"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
+                    android:text="@string/tomorrow"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/nextDayTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:text="27°C"/>
+            </LinearLayout>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="8dp">
             <ImageView
+                android:id="@+id/weatherIconSecond"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/pressure" />
+                android:src="@drawable/sun" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="Pojutrze"
-                android:textColor="@color/white"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/secondDayTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:text="27°C"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
+                    android:text="@string/secondDay"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/secondDayTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:text="27°C"/>
+            </LinearLayout>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="8dp">
             <ImageView
+                android:id="@+id/weatherIconThird"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/pressure" />
+                android:src="@drawable/snow" />
 
-            <TextView
-                android:id="@+id/thirdDay"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="Środa"
-                android:textColor="@color/white"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/thirdDayTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:text="27°C"/>
+                <TextView
+                    android:id="@+id/thirdDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
+                    android:text="Środa"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/thirdDayTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:text="27°C"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

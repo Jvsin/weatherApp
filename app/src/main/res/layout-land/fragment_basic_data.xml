@@ -65,6 +65,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/minTemp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/white"/>
                 <TextView
@@ -72,6 +76,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/white"/>
 
@@ -84,6 +92,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/maxTemp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/white"/>
                 <TextView
@@ -91,6 +103,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:text="30°C"
                     android:textColor="@color/white"
                     />
@@ -118,8 +134,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text=""
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

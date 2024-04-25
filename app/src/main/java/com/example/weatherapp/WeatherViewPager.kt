@@ -1,16 +1,12 @@
 package com.example.weatherapp
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
-import com.example.weatherapp.databinding.ActivityMainBinding
-import com.example.weatherapp.databinding.BasicDataBinding
 import com.example.weatherapp.fragments.AdditionalDataFragment
 import com.example.weatherapp.fragments.BasicDataFragment
 import com.example.weatherapp.fragments.ForecastFragment
@@ -25,16 +21,17 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
 
-class MainActivity : AppCompatActivity() {
+class WeatherViewPager : AppCompatActivity() {
 
     val location : String = "Warsaw"
+    private lateinit var viewPager: ViewPager2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_weather)
 
-        fetchWeather()
-        fetchForecast()
-
+        viewPager = findViewById(R.id.pager)
+        viewPager.adapter = ViewPagerAdapter(this, location)
     }
     private fun fetchWeather(){
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"

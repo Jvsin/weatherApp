@@ -53,10 +53,9 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
-    
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.google.android.material:material:1.1.0-alpha08")
-    implementation ("androidx.viewpager2:viewpager2:1.0.0-beta02")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

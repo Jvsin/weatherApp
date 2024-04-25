@@ -30,18 +30,24 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="@string/pressure"
-                    android:textColor="@color/white"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:autoSizeMinTextSize="12sp"-->
+<!--                    android:autoSizeMaxTextSize="100sp"-->
+<!--                    android:autoSizeStepGranularity="2sp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="@string/pressure"-->
+<!--                    android:textColor="@color/white"/>-->
 
                 <TextView
                     android:id="@+id/pressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:textColor="@color/white"
                     android:text="1004hPa"/>
             </LinearLayout>
@@ -61,18 +67,24 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="@string/humidity"
-                    android:textColor="@color/white"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:autoSizeMinTextSize="12sp"-->
+<!--                    android:autoSizeMaxTextSize="100sp"-->
+<!--                    android:autoSizeStepGranularity="2sp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="@string/humidity"-->
+<!--                    android:textColor="@color/white"/>-->
 
                 <TextView
                     android:id="@+id/humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:textColor="@color/white"
                     android:text="32%"/>
             </LinearLayout>
@@ -94,18 +106,24 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="@string/wind"
-                    android:textColor="@color/white"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:autoSizeMinTextSize="12sp"-->
+<!--                    android:autoSizeMaxTextSize="100sp"-->
+<!--                    android:autoSizeStepGranularity="2sp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="@string/wind"-->
+<!--                    android:textColor="@color/white"/>-->
 
                 <TextView
                     android:id="@+id/wind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:textColor="@color/white"
                     android:text="40 km/h"/>
 
@@ -130,18 +148,24 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="@string/clouds"
-                    android:textColor="@color/white"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:autoSizeMinTextSize="12sp"-->
+<!--                    android:autoSizeMaxTextSize="100sp"-->
+<!--                    android:autoSizeStepGranularity="2sp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="@string/clouds"-->
+<!--                    android:textColor="@color/white"/>-->
 
                 <TextView
                     android:id="@+id/clouds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:textSize="20sp"
                     android:textColor="@color/white"
                     android:text="0%"/>
             </LinearLayout>

@@ -9,4 +9,6 @@
     <string name="wind">PRĘD. WIATRU</string>
     <string name="rainingChance">OPADY</string>
     <string name="clouds">ZACHMURZENIE</string>
+    <string name="tomorrow">Jutro</string>
+    <string name="secondDay">Pojutrze</string>
 </resources>
