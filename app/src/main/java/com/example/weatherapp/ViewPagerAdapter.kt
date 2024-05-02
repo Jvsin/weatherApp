@@ -104,16 +104,30 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String) : Fr
         bundle.putString("firstDayDate",
             forecast?.list?.get(4)?.dt?.let { dateTimeStamp(it.toLong(), forecast!!.city.timezone) })
         bundle.putString("firstWeatherID", forecast?.list?.get(4)?.weather?.get(0)?.id.toString())
+
         bundle.putString("tempSecondDay",
             forecast?.list?.get(12)?.main?.let { temperatureConvert(it.temp) })
         bundle.putString("secondDayDate",
             forecast?.city?.let { dateTimeStamp(forecast!!.list[12].dt.toLong(), it.timezone) })
         bundle.putString("secondWeatherID", forecast?.list?.get(12)?.weather?.get(0)?.id.toString())
+
         bundle.putString("tempThirdDay",
             forecast?.list?.get(20)?.main?.let { temperatureConvert(it.temp) })
         bundle.putString("thirdDayDate",
             forecast?.city?.let { dateTimeStamp(forecast!!.list[20].dt.toLong(), it.timezone) })
         bundle.putString("thirdWeatherID", forecast?.list?.get(20)?.weather?.get(0)?.id.toString())
+
+        bundle.putString("tempFourthDay",
+            forecast?.list?.get(28)?.main?.let { temperatureConvert(it.temp) })
+        bundle.putString("fourthDayDate",
+            forecast?.city?.let { dateTimeStamp(forecast!!.list[28].dt.toLong(), it.timezone) })
+        bundle.putString("FourthWeatherID", forecast?.list?.get(28)?.weather?.get(0)?.id.toString())
+
+        bundle.putString("tempFifthDay",
+            forecast?.list?.get(36)?.main?.let { temperatureConvert(it.temp) })
+        bundle.putString("fifthDayDate",
+            forecast?.city?.let { dateTimeStamp(forecast!!.list[36].dt.toLong(), it.timezone) })
+        bundle.putString("fifthWeatherID", forecast?.list?.get(36)?.weather?.get(0)?.id.toString())
 
         forecastFrag.arguments = bundle
 //        addFragment(R.id.fragment_forecast, forecastFrag)

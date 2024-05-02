@@ -25,15 +25,28 @@ class ForecastFragment : Fragment() {
         val tempFirstDay = arguments?.getString("tempFirstDay")
         val tempSecondDay = arguments?.getString("tempSecondDay")
         val tempThirdDay = arguments?.getString("tempThirdDay")
+        val tempFourthDay = arguments?.getString("tempFourthDay")
+        val tempFifthDay = arguments?.getString("tempFifthDay")
+
         val thirdDay = arguments?.getString("thirdDayDate")
+        val fourthDay = arguments?.getString("fourthDayDate")
+        val fifthDay = arguments?.getString("fifthDayDate")
+
         val firstWeatherID = arguments?.getString("firstWeatherID")
         val secondWeatherID = arguments?.getString("secondWeatherID")
         val thirdWeatherID = arguments?.getString("thirdWeatherID")
+        val fourthWeatherID = arguments?.getString("fourthWeatherID")
+        val fifthWeatherID = arguments?.getString("fifthWeatherID")
 
         view.findViewById<TextView>(R.id.nextDayTemp).text = tempFirstDay
         view.findViewById<TextView>(R.id.secondDayTemp).text = tempSecondDay
         view.findViewById<TextView>(R.id.thirdDayTemp).text = tempThirdDay
+        view.findViewById<TextView>(R.id.fourthDayTemp).text = tempFourthDay
+        view.findViewById<TextView>(R.id.fifthDayTemp).text = tempFifthDay
+
         view.findViewById<TextView>(R.id.thirdDay).text = thirdDay
+        view.findViewById<TextView>(R.id.fourthDay).text = fourthDay
+        view.findViewById<TextView>(R.id.fifthDay).text = fifthDay
 
         if (firstWeatherID != null) {
             setWeatherIcon(view, firstWeatherID, R.id.weatherIconFirst)
@@ -43,6 +56,12 @@ class ForecastFragment : Fragment() {
         }
         if (thirdWeatherID != null) {
             setWeatherIcon(view, thirdWeatherID, R.id.weatherIconThird)
+        }
+        if (fourthWeatherID != null) {
+            setWeatherIcon(view, fourthWeatherID, R.id.weatherIconThird)
+        }
+        if (fifthWeatherID != null) {
+            setWeatherIcon(view, fifthWeatherID, R.id.weatherIconThird)
         }
     }
 
