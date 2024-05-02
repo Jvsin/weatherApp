@@ -11,13 +11,13 @@
         android:id="@+id/adding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="6"
         >
-        <LinearLayout android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:gravity="center"
             android:padding="8dp">
             <EditText
@@ -25,19 +25,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Wprowadź lokalizacje"/>
-
         </LinearLayout>
-
-        <LinearLayout android:layout_width="0dp"
+        <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_weight="3"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:weightSum="2">
+            <Button
+                android:id="@+id/show_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pokaż"
+                android:autoSizeTextType="uniform"/>
             <Button
                 android:id="@+id/add_location_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Dodaj"
                 android:autoSizeTextType="uniform"/>
         </LinearLayout>
@@ -49,13 +56,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@id/adding">
-<!--        <Button-->
-<!--            android:id="@+id/test"-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/buttonsTemplate"-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="miasto "-->
-<!--            android:autoSizeTextType="uniform"-->
-<!--            />-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/test"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="3"-->
+<!--                android:text="name"-->
+<!--                android:autoSizeTextType="uniform"/>-->
+<!--            <Button-->
+<!--                android:id="@+id/test2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Usuń"-->
+<!--                android:autoSizeTextType="uniform"/>-->
+
+<!--        </LinearLayout>-->
+
+<!--       Button-->
+        <!--            android:id="@+id/test"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="miasto "-->
+        <!--            android:autoSizeTextType="uniform"-->
+        <!--            />-->
     </LinearLayout>
 
     <LinearLayout

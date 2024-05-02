@@ -14,5 +14,5 @@
     <string name="fetchNewData">Pobierz najnowsze dane</string>
     <string name="fetchData">Pobierz dane</string>
     <string name="changeUnits">Zmień jednostki</string>
-    <string name="deleteCity">Usuń miasto</string>
+    <string name="deleteCity">Wyczysć listę</string>
 </resources>
