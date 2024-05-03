@@ -211,10 +211,12 @@ class MainPage : AppCompatActivity() {
             LinearLayout.LayoutParams.WRAP_CONTENT) // Wysokość
         button.text = location
         button.id = buttonId
-
+        Log.v("enumy: ", actualTempUnit.toString() + ' ' + actualDistUnit.toString())
         button.setOnClickListener {
             val intent = Intent(this, WeatherViewPager::class.java)
             intent.putExtra("location", location)
+            intent.putExtra("tempUnit", actualTempUnit.toString())
+            intent.putExtra("distUnit", actualDistUnit.toString())
             startActivity(intent)
         }
 

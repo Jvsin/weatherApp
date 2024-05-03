@@ -25,14 +25,21 @@ class WeatherViewPager : AppCompatActivity() {
 
     private var location : String = ""
     private lateinit var viewPager: ViewPager2
+    private var tempUnit: Temperatures = Temperatures.CELSIUS
+    private var distUnit: Distance = Distance.METERS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
         location = intent.getStringExtra("location").toString()
 
+        var check = intent.getStringExtra("tempUnit").toString()
+        tempUnit = Temperatures.valueOf(check)
+        check = intent.getStringExtra("distUnit").toString()
+        distUnit = Distance.valueOf(check)
+
         viewPager = findViewById(R.id.pager)
-        viewPager.adapter = ViewPagerAdapter(this, location)
+        viewPager.adapter = ViewPagerAdapter(this, location, tempUnit, distUnit)
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
@@ -46,12 +53,12 @@ class WeatherViewPager : AppCompatActivity() {
         val bundle = Bundle()
 
         bundle.putString("city", weather.name)
-        bundle.putString("temperature", temperatureConvert(weather.main.temp))
+        bundle.putString("temperature", temperatureConvert(weather.main.temp, tempUnit))
         bundle.putString("status", weather.weather[0].description)
         bundle.putString("weatherID", weather.weather[0].id.toString())
         bundle.putString("time", timeStampConvert(weather.dt.toLong(), weather.timezone))
-        bundle.putString("minTemp", temperatureConvert(weather.main.temp_min))
-        bundle.putString("maxTemp", temperatureConvert(weather.main.temp_max))
+        bundle.putString("minTemp", temperatureConvert(weather.main.temp_min, tempUnit))
+        bundle.putString("maxTemp", temperatureConvert(weather.main.temp_max, tempUnit))
         bundle.putString("sunrise", shortTimeStamp(weather.sys.sunrise.toLong(), weather.timezone))
         bundle.putString("sunset", shortTimeStamp(weather.sys.sunset.toLong(), weather.timezone))
 
@@ -76,13 +83,13 @@ class WeatherViewPager : AppCompatActivity() {
         val forecastFrag = ForecastFragment()
         val bundle = Bundle()
 
-        bundle.putString("tempFirstDay",temperatureConvert(forecast.list[4].main.temp))
+        bundle.putString("tempFirstDay",temperatureConvert(forecast.list[4].main.temp, tempUnit))
         bundle.putString("firstDayDate",dateTimeStamp(forecast.list[4].dt.toLong(), forecast.city.timezone))
         bundle.putString("firstWeatherID",forecast.list[4].weather[0].id.toString())
-        bundle.putString("tempSecondDay",temperatureConvert(forecast.list[12].main.temp))
+        bundle.putString("tempSecondDay",temperatureConvert(forecast.list[12].main.temp, tempUnit))
         bundle.putString("secondDayDate",dateTimeStamp(forecast.list[12].dt.toLong(), forecast.city.timezone))
         bundle.putString("secondWeatherID",forecast.list[12].weather[0].id.toString())
-        bundle.putString("tempThirdDay",temperatureConvert(forecast.list[20].main.temp))
+        bundle.putString("tempThirdDay",temperatureConvert(forecast.list[20].main.temp, tempUnit))
         bundle.putString("thirdDayDate",dateTimeStamp(forecast.list[20].dt.toLong(), forecast.city.timezone))
         bundle.putString("thirdWeatherID",forecast.list[20].weather[0].id.toString())
 
@@ -138,9 +145,18 @@ class WeatherViewPager : AppCompatActivity() {
         return result
     }
 
-    private fun temperatureConvert(kelvin: Double) : String {
+    private fun temperatureConvert(kelvin: Double, tempEnum: Temperatures) : String {
         var temp = kelvin.toInt()
-        temp -= 273
-        return "$temp°C"
+        when(tempEnum){
+            Temperatures.CELSIUS -> {
+                temp -= 273
+                return "$temp°C"
+            }
+            Temperatures.KELVINS -> return "$temp°K"
+            Temperatures.FAHRENHEITS -> {
+                temp = ((temp * 9)/5 - 459.67).toInt()
+                return "$temp°F"
+            }
+        }
     }
 }
