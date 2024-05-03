@@ -39,14 +39,6 @@
             android:text="12:24"
             android:layout_gravity="center"
             android:textSize="20sp"/>
-        <ImageView
-            android:id="@+id/weatherIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/thunderstorm"
-            android:padding="20dp" />
-
         <TextView
             android:id="@+id/overallStatus"
             android:textColor="@color/white"
@@ -59,6 +51,13 @@
             android:textSize="20sp"
             android:text="bezchmurnie"
             />
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/few_clouds"
+            android:padding="20dp" />
 
         <TextView
             android:id="@+id/temperature"
