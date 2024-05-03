@@ -4,9 +4,9 @@
     <string name="cityName"> </string>
     <string name="minTemp">Min: </string>
     <string name="maxTemp">Max: </string>
-    <string name="pressure">CISNIENIE</string>
-    <string name="humidity">WILGOTNOSĆ</string>
-    <string name="wind">PRĘD. WIATRU</string>
+    <string name="pressure">CIŚNIENIE</string>
+    <string name="humidity">WILGOTNOŚĆ</string>
+    <string name="wind">PRĘDKOŚĆ WIATRU</string>
     <string name="rainingChance">OPADY</string>
     <string name="clouds">ZACHMURZENIE</string>
     <string name="tomorrow">Jutro</string>
@@ -15,4 +15,5 @@
     <string name="fetchData">Pobierz dane</string>
     <string name="changeUnits">Zmień jednostki</string>
     <string name="deleteCity">Wyczysć listę</string>
+    <string name="visibility">WIDOCZNOŚĆ</string>
 </resources>

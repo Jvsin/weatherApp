@@ -85,10 +85,12 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String) : Fr
         val bundle = Bundle()
         Log.v("basic1", weather.toString())
 
-        bundle.putString("pressure", weather?.main?.pressure.toString() + "hPa")
-        bundle.putString("humidity", weather?.main?.humidity.toString() + "%")
-        bundle.putString("wind", weather?.wind?.speed.toString() + "m/s")
-        bundle.putString("cloudiness", weather?.clouds?.all.toString() + "%")
+        bundle.putString("pressure", weather?.main?.pressure.toString() + " hPa")
+        bundle.putString("humidity", weather?.main?.humidity.toString() +  " %")
+        bundle.putString("wind", weather?.wind?.speed.toString() + " m/s")
+        bundle.putString("direction", weather?.wind?.deg.toString())
+        bundle.putString("cloudiness", weather?.clouds?.all.toString() + " %")
+        bundle.putString("visibility", weather?.visibility.toString() + " m")
 
         additionalDataFrag.arguments = bundle
 //        addFragment(R.id.fragment_additional_data, additionalDataFrag)

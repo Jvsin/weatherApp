@@ -3,41 +3,46 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/gray">
+    android:layout_centerInParent="true"
+    android:background="@drawable/main_background">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="1">
 
         <LinearLayout android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:layout_weight="1"
+            android:weightSum="4"
             android:gravity="center"
             android:padding="8dp">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/pressure" />
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:autoSizeMinTextSize="12sp"-->
-<!--                android:autoSizeMaxTextSize="100sp"-->
-<!--                android:autoSizeStepGranularity="2sp"-->
-<!--                android:textSize="20sp"-->
-<!--                android:text="@string/pressure"-->
-<!--                android:textColor="@color/white"/>-->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textSize="20sp"
+                android:text="@string/pressure"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/pressure"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
@@ -45,30 +50,47 @@
                 android:textColor="@color/white"
                 android:text="1004hPa"/>
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_weight="1"
-            android:gravity="center" android:padding="8dp">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="4"
+            android:gravity="center"
+            android:padding="8dp">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/humidity" />
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:autoSizeMinTextSize="12sp"-->
-<!--                android:autoSizeMaxTextSize="100sp"-->
-<!--                android:autoSizeStepGranularity="2sp"-->
-<!--                android:textSize="20sp"-->
-<!--                android:text="@string/humidity"-->
-<!--                android:textColor="@color/white"/>-->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textSize="20sp"
+                android:text="@string/humidity"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/humidity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
@@ -76,13 +98,107 @@
                 android:textColor="@color/white"
                 android:text="32%"/>
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="4">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/clouds" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/clouds"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/clouds"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="0%"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="4">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/visibility" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/visibility"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/visibility"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="0%"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
-
         <LinearLayout android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -94,15 +210,15 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/wind" />
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:autoSizeMinTextSize="12sp"-->
-<!--                android:autoSizeMaxTextSize="100sp"-->
-<!--                android:autoSizeStepGranularity="2sp"-->
-<!--                android:textSize="20sp"-->
-<!--                android:text="@string/wind"-->
-<!--                android:textColor="@color/white"/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textSize="20sp"
+                android:text="@string/wind"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/wind"
@@ -113,7 +229,7 @@
                 android:autoSizeStepGranularity="2sp"
                 android:textSize="20sp"
                 android:textColor="@color/white"
-                android:text="40 km/h"/>
+                android:text="40 m/s"/>
 
         </LinearLayout>
 
@@ -123,24 +239,21 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="8dp">
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/clouds" />
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:autoSizeMinTextSize="12sp"-->
-<!--                android:autoSizeMaxTextSize="100sp"-->
-<!--                android:autoSizeStepGranularity="2sp"-->
-<!--                android:textSize="20sp"-->
-<!--                android:text="@string/clouds"-->
-<!--                android:textColor="@color/white"/>-->
-
+                android:src="@drawable/compass" />
             <TextView
-                android:id="@+id/clouds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textSize="20sp"
+                android:text="KIERUNEK WIATRU"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/windDirection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoSizeMinTextSize="12sp"
@@ -148,9 +261,11 @@
                 android:autoSizeStepGranularity="2sp"
                 android:textSize="20sp"
                 android:textColor="@color/white"
-                android:text="0%"/>
+                android:text="Północ"/>
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 

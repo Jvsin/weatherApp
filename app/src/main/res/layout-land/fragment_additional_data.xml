@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/gray">
+    android:background="@drawable/main_background">
 
 
     <LinearLayout
