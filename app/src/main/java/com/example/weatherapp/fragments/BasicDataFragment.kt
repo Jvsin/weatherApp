@@ -45,6 +45,7 @@ class BasicDataFragment : Fragment() {
         val sunrise = arguments?.getString("sunrise")
         val sunset = arguments?.getString("sunset")
         val weatherID = arguments?.getString("weatherID")
+        val feelLikeTemp = arguments?.getString("feelLike")
 
         Log.v("basic", city.toString())
         Log.v("basic", temp.toString())
@@ -60,6 +61,7 @@ class BasicDataFragment : Fragment() {
         view.findViewById<TextView>(R.id.tempMax).text = maxTemp
         view.findViewById<TextView>(R.id.sunrise).text = sunrise
         view.findViewById<TextView>(R.id.sunset).text = sunset
+        view.findViewById<TextView>(R.id.feelsLike).text = feelLikeTemp
         if (weatherID != null) {
             setWeatherIcon(view, weatherID)
         }

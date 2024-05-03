@@ -74,6 +74,8 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String) : Fr
             weather?.sys?.sunrise?.let { shortTimeStamp(it.toLong(), weather!!.timezone) })
         bundle.putString("sunset",
             weather?.sys?.sunset?.let { shortTimeStamp(it.toLong(), weather!!.timezone) })
+        bundle.putString("feelLike",
+            weather?.main?.feels_like?.let { temperatureConvert(it) })
 
         basicDataFrag.arguments = bundle
 //        addFragment(R.id.fragment_basic_weather, basicDataFrag)
