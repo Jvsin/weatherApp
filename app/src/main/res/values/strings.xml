@@ -16,4 +16,5 @@
     <string name="changeUnits">Zmień jednostki</string>
     <string name="deleteCity">Wyczysć listę</string>
     <string name="visibility">WIDOCZNOŚĆ</string>
+    <string name="set_units">Ustaw jednostki:</string>
 </resources>
