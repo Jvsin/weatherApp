@@ -318,15 +318,15 @@ class MainPage : AppCompatActivity() {
         tempSpinner.adapter = adapterTemp
 
         tempSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val unit = parent.getItemAtPosition(position).toString()
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val unit = parent?.getItemAtPosition(position).toString()
                 actualTempUnit = when(unit) {
                     "Kelviny" -> Temperatures.KELVINS
                     "Celsjusze" -> Temperatures.CELSIUS
                     "Farenhajty" -> Temperatures.FAHRENHEITS
                     else -> Temperatures.CELSIUS
                 }
-                Toast.makeText(parent.context, "Wybrano: $unit", Toast.LENGTH_SHORT).show()
+                Toast.makeText(parent?.context, "Wybrano: $unit", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -340,14 +340,14 @@ class MainPage : AppCompatActivity() {
         distSpinner.adapter = adapterDist
 
         distSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val unit = parent.getItemAtPosition(position).toString()
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val unit = parent?.getItemAtPosition(position).toString()
                 actualDistUnit = when(unit) {
                     "Metry" -> Distance.METERS
                     "Mile" -> Distance.MILES
                     else -> Distance.METERS
                 }
-                Toast.makeText(parent.context, "Wybrano: $unit", Toast.LENGTH_SHORT).show()
+                Toast.makeText(parent?.context, "Wybrano: $unit", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
