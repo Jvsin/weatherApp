@@ -42,10 +42,10 @@ class WeatherViewPager : AppCompatActivity() {
         viewPager.adapter = ViewPagerAdapter(this, location, tempUnit, distUnit)
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//        finish()
-//    }
+    override fun onPause() {
+        super.onPause()
+        finish()
+    }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
         supportFragmentManager.beginTransaction()
