@@ -16,6 +16,8 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
+import java.util.Timer
+import java.util.TimerTask
 
 class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp: Temperatures, dist: Distance) : FragmentStateAdapter(activity) {
 
@@ -28,6 +30,7 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp
     init {
         weather = loadWeatherData()
         forecast = loadForecastData()
+        setTimer()
     }
     override fun getItemCount(): Int {
         return frag_items
@@ -217,4 +220,15 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp
         }
     }
 
+    private fun setTimer() {
+        val timer = Timer()
+        timer.schedule(object : TimerTask(){
+            override fun run() {
+                loadForecastData()
+                loadWeatherData()
+                Log.v("TIMER: aktualizacja dla: ", location)
+            }
+        },0,  10000 * 15
+        )
+    }
 }

@@ -24,12 +24,15 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.util.Timer
+import java.util.TimerTask
 
 class MainPage : AppCompatActivity() {
 
 //    var cityList: Set<String>? = null
     var actualTempUnit: Temperatures = Temperatures.CELSIUS
     var actualDistUnit: Distance = Distance.METERS
+    var allCities: Set<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +43,15 @@ class MainPage : AppCompatActivity() {
 
         settingsUse()
 
+
         var locationList: Set<String> = loadLocations()
+        allCities = locationList
         locationList.forEachIndexed { it, el ->
             Log.v("MIASTA: wczytanie ", it.toString() +' '+ el)
         }
         fetchData(locationList, layout)
+
+        setTimer()
 
         val addBtn: Button = findViewById(R.id.add_location_button)
         addBtn.setOnClickListener {
@@ -58,6 +65,7 @@ class MainPage : AppCompatActivity() {
                 fetchWeather(newCity)
                 fetchForecast(newCity)
                 locationList = added
+                allCities = locationList
                 input.text.clear()
             }
         }
@@ -108,6 +116,7 @@ class MainPage : AppCompatActivity() {
             clearAllCities(layout, list)
             list.clear()
             locationList = list.toSet()
+            allCities = locationList
             Log.v("MIASTA: clearAll(): ", loadLocations().toString())
         }
     }
@@ -121,6 +130,7 @@ class MainPage : AppCompatActivity() {
             removeLocation(city)
         }
         cityList.clear()
+        allCities = cityList
 //        saveLocations(cityList)
     }
 
@@ -386,6 +396,20 @@ class MainPage : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun setTimer() {
+        val timer = Timer()
+        timer.schedule(object : TimerTask(){
+            override fun run() {
+                allCities?.forEachIndexed{ id, location ->
+                    fetchWeather(location)
+                    fetchForecast(location)
+                    Log.v("TIMER: pobrał: ", location)
+                }
+            }
+        },0,  60000 * 10
+        )
     }
 
 }
