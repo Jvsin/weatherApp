@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
@@ -41,7 +42,7 @@ class MainPage : AppCompatActivity() {
 
         var locationList: Set<String> = loadLocations()
         locationList.forEachIndexed { it, el ->
-            Log.v("lista miasta: wczytanie", it.toString() + el)
+            Log.v("MIASTA: wczytanie ", it.toString() +' '+ el)
         }
         fetchData(locationList, layout)
 
@@ -57,7 +58,37 @@ class MainPage : AppCompatActivity() {
                 fetchWeather(newCity)
                 fetchForecast(newCity)
                 locationList = added
+                input.text.clear()
             }
+        }
+
+        val showBtn: Button = findViewById(R.id.show_button)
+        showBtn.setOnClickListener {
+            val cityCheck: String = input.text.toString()
+            fetchWeather(cityCheck)
+            fetchForecast(cityCheck)
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Znaleziono lokalizacje: ")
+            builder.setMessage(cityCheck)
+            builder.setNeutralButton("Otwórz") { dialog, which ->
+                val intent = Intent(this, QuickWeatherView::class.java)
+                intent.putExtra("location", cityCheck)
+                intent.putExtra("tempUnit", actualTempUnit.toString())
+                intent.putExtra("distUnit", actualDistUnit.toString())
+                startActivity(intent)
+            }
+            builder.setPositiveButton("Dodaj do listy") { dialog, which ->
+                val added: Set<String> = (locationList + cityCheck).toSet()
+                saveLocations(added)
+                addButton(layout, added.size - 1, cityCheck)
+//                addButtonWithRemoveButton(layout, locationList.size, newCity)
+                fetchWeather(cityCheck)
+                fetchForecast(cityCheck)
+                locationList = added
+                input.text.clear()
+            }
+            builder.show()
         }
 
         val dataFetchBtn: Button = findViewById(R.id.fetchData)
@@ -73,25 +104,23 @@ class MainPage : AppCompatActivity() {
 
         val cityRemoveBtn: Button = findViewById(R.id.deleteCity)
         cityRemoveBtn.setOnClickListener {
-            Log.v("lista miasta: przed usunięciem", locationList.toString())
             val list = locationList.toMutableSet()
             clearAllCities(layout, list)
-            Log.v("lista miasta: po kliknieciu usun", list.toString())
+            list.clear()
+            locationList = list.toSet()
+            Log.v("MIASTA: clearAll(): ", loadLocations().toString())
         }
     }
 
     private fun clearAllCities(layout: LinearLayout, cityList: MutableSet<String>) {
         cityList.forEachIndexed { id, city ->
-            Log.v("lista miasta: miasto do usuniecia: ", id.toString() + city)
+            Log.v("MIASTA: usuwam: ", city)
             removeButton(layout, id)
             removeWeatherData(city)
             removeForecastData(city)
-            Log.v("lista check", id.toString() + city)
             removeLocation(city)
         }
         cityList.clear()
-        Log.v("lista miasta: po usunięciu wszystkich", loadLocations().toString())
-        Log.v("lista check po clear", cityList.toString())
 //        saveLocations(cityList)
     }
 
@@ -101,6 +130,7 @@ class MainPage : AppCompatActivity() {
                 fetchWeather(location)
                 fetchForecast(location)
                 addButton(layout, id, location)
+                Log.v("MIASTA: pobrano: ", "fetchData() " + location)
 //                addButtonWithRemoveButton(layout, locationList.size, location)
             }
         }
@@ -128,9 +158,11 @@ class MainPage : AppCompatActivity() {
                 if (response.isSuccessful && json != null) {
                     val weatherData = Gson().fromJson(json, weatherClass::class.java)
                     val outputJson: String = Gson().toJson(weatherData)
-                    runOnUiThread {
-                        saveWeatherData(weatherData, location)
-                    }
+                    Log.v("MIASTA: pobrano dane dla: ", location + ' ' + outputJson)
+                    saveWeatherData(weatherData, location)
+//                    runOnUiThread {
+//                        saveWeatherData(weatherData, location)
+//                    }
                 } else {
                     Log.v("check", "tutaj sie wywala")
                 }
@@ -161,9 +193,10 @@ class MainPage : AppCompatActivity() {
                     val forecastData: forecastClass = Gson().fromJson(json, forecastClass::class.java)
                     val outputJson: String = Gson().toJson(forecastData)
                     Log.v("check1", "output json forecast: " + outputJson)
-                    runOnUiThread {
-                        saveForecastData(forecastData, location)
-                    }
+                    saveForecastData(forecastData, location)
+//                    runOnUiThread {
+//                        saveForecastData(forecastData, location)
+//                    }
                 } else {
                     Log.v("check","tutaj sie wywala")
                 }
@@ -204,7 +237,6 @@ class MainPage : AppCompatActivity() {
     }
 
     fun addButton(layout: LinearLayout, buttonId: Int, location: String) {
-        Log.v("lista check", buttonId.toString() + location)
         val button = Button(this)
         button.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, // Szerokość
@@ -265,7 +297,6 @@ class MainPage : AppCompatActivity() {
         layout.addView(horizontalLayout)
     }
     private fun removeButton(layout: LinearLayout, buttonId: Int) {
-        Log.v("lista miasta: usuwanie buttona: ", buttonId.toString())
         val button = findViewById<Button>(buttonId)
         layout.removeView(button)
     }
@@ -300,10 +331,9 @@ class MainPage : AppCompatActivity() {
         val json = sharedPreferences.getString("locations", null)
         val type = object : TypeToken<Set<String>>() {}.type
         var locations: Set<String> = gson.fromJson(json, type)
-
+        Log.v("MIASTA: usuwam lokalizacje: ", locationToRemove)
         if (locations.contains(locationToRemove)) {
             locations = locations.filter { it != locationToRemove }.toSet()
-
             val editor = sharedPreferences.edit()
             val newJson = gson.toJson(locations)
             editor.putString("locations", newJson)

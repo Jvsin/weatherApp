@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
 
-class WeatherViewPager : AppCompatActivity() {
+class QuickWeatherView : AppCompatActivity() {
 
     private var location : String = ""
     private lateinit var viewPager: ViewPager2
@@ -44,6 +44,10 @@ class WeatherViewPager : AppCompatActivity() {
         viewPager.adapter = ViewPagerAdapter(this, location, tempUnit, distUnit)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        removeLocation(location)
+    }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
         supportFragmentManager.beginTransaction()
