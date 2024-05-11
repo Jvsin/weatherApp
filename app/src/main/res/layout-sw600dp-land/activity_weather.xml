@@ -5,47 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    android:orientation="vertical">
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:id="@+id/pager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    android:orientation="vertical"
+    android:weightSum="10">
 
-
-<!--    </androidx.viewpager2.widget.ViewPager2>-->
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_basic_weather"
-        android:name="com.example.weatherapp.fragments.BasicDataFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_additional_data"
-        />
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragment_basic_weather"
+                android:name="com.example.weatherapp.fragments.BasicDataFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                />
+        </LinearLayout>
 
-    <!-- Fragment 2: Dane dodatkowe -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_additional_data"
-        android:name="com.example.weatherapp.fragments.AdditionalDataFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/cyan"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_basic_weather"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_forecast"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="5"
+            >
+            <!-- Fragment 2: Dane dodatkowe -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragment_additional_data"
+                android:name="com.example.weatherapp.fragments.AdditionalDataFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@color/cyan"
+                />
 
-    <!--    &lt;!&ndash; Fragment 3: Prognoza pogody na nadchodzące dni &ndash;&gt;-->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_forecast"
-        android:name="com.example.weatherapp.fragments.ForecastFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_additional_data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+            <!--    &lt;!&ndash; Fragment 3: Prognoza pogody na nadchodzące dni &ndash;&gt;-->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragment_forecast"
+                android:name="com.example.weatherapp.fragments.ForecastFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@color/gray"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
