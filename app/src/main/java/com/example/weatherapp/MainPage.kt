@@ -16,6 +16,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
+import com.example.weatherapp.phoneView.QuickWeatherView
+import com.example.weatherapp.phoneView.WeatherViewPager
+import com.example.weatherapp.tabletView.WeatherViewTablet
+import com.example.weatherapp.utils.Distance
+import com.example.weatherapp.utils.Temperatures
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Call
@@ -26,10 +31,10 @@ import okhttp3.Response
 import java.io.IOException
 import java.util.Timer
 import java.util.TimerTask
+import kotlin.math.min
 
 class MainPage : AppCompatActivity() {
 
-//    var cityList: Set<String>? = null
     var actualTempUnit: Temperatures = Temperatures.CELSIUS
     var actualDistUnit: Distance = Distance.METERS
     var allCities: MutableSet<String>? = null
@@ -42,7 +47,6 @@ class MainPage : AppCompatActivity() {
         val input = findViewById<EditText>(R.id.location_input)
 
         settingsUse()
-
 
         var locationList: Set<String> = loadLocations()
         allCities = locationList.toMutableSet()
@@ -74,6 +78,7 @@ class MainPage : AppCompatActivity() {
         val showBtn: Button = findViewById(R.id.show_button)
         showBtn.setOnClickListener {
             val cityCheck: String = input.text.toString()
+
             fetchWeather(cityCheck)
             fetchForecast(cityCheck)
 
@@ -103,6 +108,7 @@ class MainPage : AppCompatActivity() {
 
         val dataFetchBtn: Button = findViewById(R.id.fetchData)
         dataFetchBtn.setOnClickListener {
+            locationList = allCities as MutableSet<String>
             if (locationList.isNotEmpty()) {
                 locationList.forEach { location, ->
                     fetchWeather(location)
@@ -157,10 +163,13 @@ class MainPage : AppCompatActivity() {
             .url(url)
             .build()
 
-        val client = OkHttpClient()
+        val client = OkHttpClient.Builder()
+            .cache(null)
+            .build()
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.v("check", "failure")
+                Log.v("check", e.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -189,9 +198,13 @@ class MainPage : AppCompatActivity() {
 
         val request = Request.Builder()
             .url(url)
+            .addHeader("Cache-Control", "no-cache")
             .build()
 
-        val client = OkHttpClient()
+        val client = OkHttpClient.Builder()
+            .cache(null)
+            .build()
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.v("check","failure")
@@ -218,6 +231,9 @@ class MainPage : AppCompatActivity() {
     }
 
     private fun saveWeatherData(weather: weatherClass, location: String) {
+        if (allCities?.contains(location) == true) {
+            removeWeatherData(location)
+        }
         val sharedPreferences = getSharedPreferences(location, Context.MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
         val gson = Gson()
@@ -227,6 +243,9 @@ class MainPage : AppCompatActivity() {
     }
 
     private fun saveForecastData(forecast: forecastClass, location: String) {
+        if (allCities?.contains(location) == true) {
+            removeForecastData(location)
+        }
         val sharedPreferences = getSharedPreferences(location, Context.MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
         val gson = Gson()
@@ -324,11 +343,25 @@ class MainPage : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT, // Wysokość
                 1f) // Waga
             setOnClickListener {
-                val intent = Intent(this@MainPage, WeatherViewPager::class.java)
-                intent.putExtra("location", location)
-                intent.putExtra("tempUnit", actualTempUnit.toString())
-                intent.putExtra("distUnit", actualDistUnit.toString())
-                startActivity(intent)
+                if(isTablet()){
+                    val intent = Intent(this@MainPage, WeatherViewTablet::class.java)
+                    intent.putExtra("location", location)
+                    intent.putExtra("tempUnit", actualTempUnit.toString())
+                    intent.putExtra("distUnit", actualDistUnit.toString())
+                    startActivity(intent)
+                }
+                else {
+                    val intent = Intent(this@MainPage, WeatherViewPager::class.java)
+                    intent.putExtra("location", location)
+                    intent.putExtra("tempUnit", actualTempUnit.toString())
+                    intent.putExtra("distUnit", actualDistUnit.toString())
+                    startActivity(intent)
+                }
+//                val intent = Intent(this@MainPage, WeatherViewPager::class.java)
+//                intent.putExtra("location", location)
+//                intent.putExtra("tempUnit", actualTempUnit.toString())
+//                intent.putExtra("distUnit", actualDistUnit.toString())
+//                startActivity(intent)
             }
         }
 
@@ -391,6 +424,7 @@ class MainPage : AppCompatActivity() {
             val newJson = gson.toJson(locations)
             editor.putString("locations", newJson)
             editor.apply()
+            Log.v("MIASTA: po usunieciu lokalizacji: ", locationToRemove + ' ' + loadLocations().toString())
         }
     }
 
@@ -437,8 +471,14 @@ class MainPage : AppCompatActivity() {
                 actualDistUnit = Distance.METERS
             }
         }
+    }
 
-
+    private fun isTablet(): Boolean {
+        val metrics = resources.displayMetrics
+        val dpWidth = metrics.widthPixels / metrics.density
+        val dpHeight = metrics.heightPixels / metrics.density
+        val smallestWidth = min(dpWidth, dpHeight)
+        return smallestWidth >= 600
     }
 
     private fun setTimer() {

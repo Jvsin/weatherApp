@@ -1,11 +1,13 @@
-package com.example.weatherapp
+package com.example.weatherapp.phoneView
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.weatherapp.utils.Distance
+import com.example.weatherapp.R
+import com.example.weatherapp.utils.Temperatures
 import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
 import com.example.weatherapp.fragments.AdditionalDataFragment
@@ -13,12 +15,6 @@ import com.example.weatherapp.fragments.BasicDataFragment
 import com.example.weatherapp.fragments.ForecastFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone

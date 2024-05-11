@@ -1,12 +1,13 @@
-package com.example.weatherapp
+package com.example.weatherapp.tabletView
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.weatherapp.utils.Distance
+import com.example.weatherapp.utils.Temperatures
 import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
 import com.example.weatherapp.fragments.AdditionalDataFragment
@@ -19,7 +20,7 @@ import java.util.TimeZone
 import java.util.Timer
 import java.util.TimerTask
 
-class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp: Temperatures, dist: Distance) : FragmentStateAdapter(activity) {
+class TabletViewAdapter(private val activity: FragmentActivity, loc: String, temp: Temperatures, dist: Distance) : FragmentStateAdapter(activity) {
 
     private val frag_items = 3
     private var weather: weatherClass? = null

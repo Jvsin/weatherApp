@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".WeatherViewPager"
+            android:name=".phoneView.WeatherViewPager"
             android:exported="true"
             android:configChanges="screenSize|screenLayout|keyboardHidden"
             android:launchMode="singleInstance">
@@ -39,7 +39,18 @@
         </activity>
 
         <activity
-            android:name=".QuickWeatherView"
+            android:name=".phoneView.QuickWeatherView"
+            android:exported="true"
+            android:configChanges="screenSize|screenLayout|keyboardHidden"
+            android:launchMode="singleInstance">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".tabletView.WeatherViewTablet"
             android:exported="true"
             android:configChanges="screenSize|screenLayout|keyboardHidden"
             android:launchMode="singleInstance">
