@@ -56,6 +56,7 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.google.android.material:material:1.1.0-alpha08")
+    implementation ("me.grantland:autofittextview:0.2.+")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -13,18 +13,28 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/cityName"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="city"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:autoSizeMinTextSize="12sp"-->
+<!--            android:autoSizeMaxTextSize="150sp"-->
+<!--            android:autoSizeStepGranularity="2sp"-->
+<!--            android:textSize="60sp"-->
+<!--            />-->
+
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/cityName"
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="city"
-            android:layout_gravity="center"
-            android:autoSizeMinTextSize="12sp"
-            android:autoSizeMaxTextSize="150sp"
-            android:autoSizeStepGranularity="2sp"
-            android:textSize="60sp"
-            />
+            android:singleLine="true"
+            android:textSize="50sp"
+            android:text="city" />
 
         <TextView
             android:id="@+id/time"
