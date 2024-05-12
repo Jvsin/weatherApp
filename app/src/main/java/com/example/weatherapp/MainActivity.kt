@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         fetchWeather()
         fetchForecast()
-
     }
     private fun fetchWeather(){
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"

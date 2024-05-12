@@ -19,7 +19,7 @@
             android:id="@+id/location_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
+            android:layout_weight="9"
             android:hint="Wprowadź lokalizacje"/>
         <Button
             android:id="@+id/show_button"
@@ -28,13 +28,7 @@
             android:layout_weight="1"
             android:text="Pokaż"
             android:autoSizeTextType="uniform"/>
-        <Button
-            android:id="@+id/add_location_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Dodaj"
-            android:autoSizeTextType="uniform"/>
+
     </LinearLayout>
 
     <LinearLayout
