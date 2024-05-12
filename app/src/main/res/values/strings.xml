@@ -17,4 +17,5 @@
     <string name="deleteCity">Wyczysć listę</string>
     <string name="visibility">WIDOCZNOŚĆ</string>
     <string name="set_units">Ustaw jednostki:</string>
+    <string name="windDirection">KIERUNEK WIATRU</string>
 </resources>

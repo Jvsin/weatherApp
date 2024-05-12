@@ -33,7 +33,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:text="Jutro"
                 android:textColor="@color/white"/>
 
@@ -45,7 +45,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:text="27°C"/>
 
@@ -72,7 +72,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:text="@string/secondDay"
                 android:textColor="@color/white"/>
 
@@ -84,7 +84,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:text="27°C"/>
 
@@ -111,7 +111,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:text="Środa"
                 android:textColor="@color/white"/>
 
@@ -123,7 +123,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:text="27°C"/>
         </LinearLayout>
@@ -150,7 +150,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:text="Poniedziałek"
                 android:textColor="@color/white"/>
 
@@ -162,7 +162,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:text="27°C"/>
         </LinearLayout>
@@ -189,7 +189,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:text="Środa"
                 android:textColor="@color/white"/>
 
@@ -201,7 +201,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:text="27°C"/>
         </LinearLayout>
