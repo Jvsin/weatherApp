@@ -18,6 +18,7 @@ import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
 import com.example.weatherapp.phoneView.QuickWeatherView
 import com.example.weatherapp.phoneView.WeatherViewPager
+import com.example.weatherapp.tabletView.QuickWeatherTablet
 import com.example.weatherapp.tabletView.WeatherViewTablet
 import com.example.weatherapp.utils.Distance
 import com.example.weatherapp.utils.Temperatures
@@ -58,8 +59,6 @@ class MainPage : AppCompatActivity() {
 
         setTimer()
 
-
-
         val showBtn: Button = findViewById(R.id.show_button)
         showBtn.setOnClickListener {
             val cityCheck: String = setCorrectString(input.text.toString())
@@ -73,11 +72,20 @@ class MainPage : AppCompatActivity() {
                 builder.setMessage(cityCheck)
                 builder.setNeutralButton("Otwórz") { dialog, which ->
                     if(correctLocationFlag){
-                        val intent = Intent(this, QuickWeatherView::class.java)
-                        intent.putExtra("location", cityCheck)
-                        intent.putExtra("tempUnit", actualTempUnit.toString())
-                        intent.putExtra("distUnit", actualDistUnit.toString())
-                        startActivity(intent)
+                        if(!isTablet()){
+                            val intent = Intent(this, QuickWeatherView::class.java)
+                            intent.putExtra("location", cityCheck)
+                            intent.putExtra("tempUnit", actualTempUnit.toString())
+                            intent.putExtra("distUnit", actualDistUnit.toString())
+                            startActivity(intent)
+                        }
+                        else {
+                            val intent = Intent(this, QuickWeatherTablet::class.java)
+                            intent.putExtra("location", cityCheck)
+                            intent.putExtra("tempUnit", actualTempUnit.toString())
+                            intent.putExtra("distUnit", actualDistUnit.toString())
+                            startActivity(intent)
+                        }
                     }
                     else {
                         Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
@@ -126,6 +134,7 @@ class MainPage : AppCompatActivity() {
             list.clear()
             locationList = list.toSet()
             allCities = locationList.toMutableSet()
+            layout.removeAllViews()
             Log.v("MIASTA: clearAll(): ", loadLocations().toString())
         }
     }
@@ -348,9 +357,9 @@ class MainPage : AppCompatActivity() {
         val removeButton = Button(this).apply {
             text = "Usuń"
             layoutParams = LinearLayout.LayoutParams(
-                0, // Szerokość
+                0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, // Wysokość
-                0.2f) // Waga
+                0.2f) // waga
             setOnClickListener {
                 layout.removeView(buttonLayout)
                 removeWeatherData(location)
@@ -478,4 +487,5 @@ class MainPage : AppCompatActivity() {
     private fun setCorrectString(text: String) : String {
         return text.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
     }
+
 }

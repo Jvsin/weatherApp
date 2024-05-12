@@ -23,7 +23,7 @@ import java.util.Timer
 import java.util.TimerTask
 import kotlin.math.min
 
-class WeatherViewTablet : AppCompatActivity() {
+class QuickWeatherTablet : AppCompatActivity() {
 
     private var location : String = ""
     private var weather: weatherClass? = null
@@ -59,6 +59,7 @@ class WeatherViewTablet : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
+        removeLocation(location)
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
@@ -249,4 +250,20 @@ class WeatherViewTablet : AppCompatActivity() {
         )
     }
 
+    fun removeLocation(locationToRemove: String) {
+        val sharedPreferences = getSharedPreferences("city_list", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("locations", null)
+        val type = object : TypeToken<Set<String>>() {}.type
+        var locations: Set<String> = gson.fromJson(json, type)
+
+        if (locations.contains(locationToRemove)) {
+            locations = locations.filter { it != locationToRemove }.toSet()
+
+            val editor = sharedPreferences.edit()
+            val newJson = gson.toJson(locations)
+            editor.putString("locations", newJson)
+            editor.apply()
+        }
+    }
 }
