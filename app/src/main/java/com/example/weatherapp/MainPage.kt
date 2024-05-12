@@ -38,6 +38,7 @@ class MainPage : AppCompatActivity() {
     var actualTempUnit: Temperatures = Temperatures.CELSIUS
     var actualDistUnit: Distance = Distance.METERS
     var allCities: MutableSet<String>? = null
+    var correctLocationFlag: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,59 +52,59 @@ class MainPage : AppCompatActivity() {
         var locationList: Set<String> = loadLocations()
         allCities = locationList.toMutableSet()
         locationList.forEachIndexed { it, el ->
-            Log.v("MIASTA: wczytanie ", it.toString() +' '+ el)
+            Log.v("LISTA MIASTA", it.toString() +' '+ el)
         }
         fetchData(locationList, layout)
 
         setTimer()
 
-        val addBtn: Button = findViewById(R.id.add_location_button)
-        addBtn.setOnClickListener {
-            val newCity: String = input.text.toString()
 
-            if (newCity.isNotEmpty()) {
-                val added: Set<String> = (locationList + newCity).toSet()
-                saveLocations(added)
-//                addButton(layout, added.size - 1, newCity)
-//                addButtonWithDelete(layout, added.size - 1, newCity)
-                addButtonWithRemoveButton(layout,added.size - 1, newCity)
-                fetchWeather(newCity)
-                fetchForecast(newCity)
-                locationList = added
-                allCities = locationList.toMutableSet()
-                input.text.clear()
-            }
-        }
 
         val showBtn: Button = findViewById(R.id.show_button)
         showBtn.setOnClickListener {
-            val cityCheck: String = input.text.toString()
-
-            fetchWeather(cityCheck)
-            fetchForecast(cityCheck)
-
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Znaleziono lokalizacje: ")
-            builder.setMessage(cityCheck)
-            builder.setNeutralButton("Otwórz") { dialog, which ->
-                val intent = Intent(this, QuickWeatherView::class.java)
-                intent.putExtra("location", cityCheck)
-                intent.putExtra("tempUnit", actualTempUnit.toString())
-                intent.putExtra("distUnit", actualDistUnit.toString())
-                startActivity(intent)
-            }
-            builder.setPositiveButton("Dodaj do listy") { dialog, which ->
-                val added: Set<String> = (locationList + cityCheck).toSet()
-                saveLocations(added)
-//                addButton(layout, added.size - 1, cityCheck)
-//                addButtonWithDelete(layout, added.size - 1, cityCheck)
-                addButtonWithRemoveButton(layout, added.size - 1, cityCheck)
+            val cityCheck: String = setCorrectString(input.text.toString())
+            checkLocation(cityCheck)
+            if(cityCheck.isNotEmpty()){
                 fetchWeather(cityCheck)
                 fetchForecast(cityCheck)
-                locationList = added
-                input.text.clear()
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("NOWA LOKALIZACJA")
+                builder.setMessage(cityCheck)
+                builder.setNeutralButton("Otwórz") { dialog, which ->
+                    if(correctLocationFlag){
+                        val intent = Intent(this, QuickWeatherView::class.java)
+                        intent.putExtra("location", cityCheck)
+                        intent.putExtra("tempUnit", actualTempUnit.toString())
+                        intent.putExtra("distUnit", actualDistUnit.toString())
+                        startActivity(intent)
+                    }
+                    else {
+                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                builder.setPositiveButton("Dodaj do listy") { dialog, which ->
+                    if(correctLocationFlag){
+                        val added: Set<String> = (locationList + cityCheck).toSet()
+                        saveLocations(added)
+                        addButtonWithRemoveButton(layout, added.size - 1, cityCheck)
+                        fetchWeather(cityCheck)
+                        fetchForecast(cityCheck)
+                        locationList = added
+                        input.text.clear()
+                    }
+                    else {
+                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                builder.setNegativeButton("Zamknij") { dialog, which ->
+                    input.text.clear()
+                    correctLocationFlag = true
+                }
+                builder.show()
+                correctLocationFlag = true
             }
-            builder.show()
+
         }
 
         val dataFetchBtn: Button = findViewById(R.id.fetchData)
@@ -155,6 +156,39 @@ class MainPage : AppCompatActivity() {
         }
     }
 
+    private fun checkLocation(location: String) : Boolean {
+        val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
+        val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey&lang=pl"
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        val client = OkHttpClient.Builder()
+            .cache(null)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.v("check", e.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val json = response.body?.string()
+                if (json != null) {
+                    Log.v("LOCATION CHECK", json)
+                }
+                if (response.isSuccessful && json != null) {
+                    Log.v("LOCATION CHECK", "LOKALIZACJA poprawna")
+                    correctLocationFlag = true
+
+                } else {
+                    Log.v("LOCATION CHECK", "Lokalizacja niepoprawna")
+                    correctLocationFlag = false
+                }
+            }
+        })
+        return correctLocationFlag
+    }
     private fun fetchWeather(location: String){
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
         val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey&lang=pl"
@@ -176,17 +210,21 @@ class MainPage : AppCompatActivity() {
                 val json = response.body?.string()
                 if (json != null) {
                     Log.v("check23", json)
+
                 }
                 if (response.isSuccessful && json != null) {
+//                    correctLocationFlag = true
                     val weatherData = Gson().fromJson(json, weatherClass::class.java)
                     val outputJson: String = Gson().toJson(weatherData)
+
                     Log.v("MIASTA: pobrano dane dla: ", location + ' ' + outputJson)
                     saveWeatherData(weatherData, location)
 //                    runOnUiThread {
 //                        saveWeatherData(weatherData, location)
 //                    }
                 } else {
-                    Log.v("check", "tutaj sie wywala")
+                    Log.v("BOOLEAN: ", "Nieprawidłowa lokalizacja")
+//                    correctLocationFlag = false
                 }
             }
         })
@@ -224,7 +262,7 @@ class MainPage : AppCompatActivity() {
 //                        saveForecastData(forecastData, location)
 //                    }
                 } else {
-                    Log.v("check","tutaj sie wywala")
+                    Log.v("check", "nie pobrało jsona")
                 }
             }
         })
@@ -268,71 +306,13 @@ class MainPage : AppCompatActivity() {
         editor.apply()
     }
 
-    fun addButton(layout: LinearLayout, buttonId: Int, location: String) {
-        val button = Button(this)
-        button.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, // Szerokość
-            LinearLayout.LayoutParams.WRAP_CONTENT) // Wysokość
-        button.text = location
-        button.id = buttonId
-        Log.v("enumy: ", actualTempUnit.toString() + ' ' + actualDistUnit.toString())
-        button.setOnClickListener {
-            val intent = Intent(this, WeatherViewPager::class.java)
-            intent.putExtra("location", location)
-            intent.putExtra("tempUnit", actualTempUnit.toString())
-            intent.putExtra("distUnit", actualDistUnit.toString())
-            startActivity(intent)
-        }
-
-        layout.addView(button)
-    }
-
-    fun addButtonWithDelete(layout: LinearLayout, buttonId: Int, location: String) {
-        val buttonLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, // Szerokość
-                LinearLayout.LayoutParams.WRAP_CONTENT) // Wysokość
-        }
-
-        val cityButton = Button(this).apply {
-            text = location
-            id = buttonId
-            setOnClickListener {
-                val intent = Intent(this@MainPage, WeatherViewPager::class.java)
-                intent.putExtra("location", location)
-                intent.putExtra("tempUnit", actualTempUnit.toString())
-                intent.putExtra("distUnit", actualDistUnit.toString())
-                startActivity(intent)
-            }
-        }
-
-        val removeButton = Button(this).apply {
-            text = "Usuń"
-            setOnClickListener {
-                layout.removeView(buttonLayout)
-                removeWeatherData(location)
-                removeForecastData(location)
-                removeLocation(location)
-                allCities?.remove(location)
-                Log.v("MIASTA: lista allCities po:", allCities.toString())
-                Log.v("MIASTA: lista po:", loadLocations().toString())
-            }
-        }
-
-        buttonLayout.addView(cityButton)
-        buttonLayout.addView(removeButton)
-        layout.addView(buttonLayout)
-    }
-
-//
 
     fun addButtonWithRemoveButton(layout: LinearLayout, buttonId: Int, location: String) {
         val buttonLayout = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, // Szerokość
-                LinearLayout.LayoutParams.WRAP_CONTENT) // Wysokość
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT)
         }
 
         val cityButton = Button(this).apply {
@@ -495,4 +475,7 @@ class MainPage : AppCompatActivity() {
         )
     }
 
+    private fun setCorrectString(text: String) : String {
+        return text.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+    }
 }
