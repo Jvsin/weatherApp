@@ -14,6 +14,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weatherapp.cities.Location
+import com.example.weatherapp.cities.cityList
 import com.example.weatherapp.dataForecast.forecastClass
 import com.example.weatherapp.dataWeather.weatherClass
 import com.example.weatherapp.phoneView.QuickWeatherView
@@ -40,6 +42,7 @@ class MainPage : AppCompatActivity() {
     var actualDistUnit: Distance = Distance.METERS
     var allCities: MutableSet<String>? = null
     var correctLocationFlag: Boolean = true
+    var searchedLocations: cityList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +65,9 @@ class MainPage : AppCompatActivity() {
         val showBtn: Button = findViewById(R.id.show_button)
         showBtn.setOnClickListener {
             val cityCheck: String = setCorrectString(input.text.toString())
-            checkLocation(cityCheck)
+//            checkLocation(cityCheck)
+            fetchGeolocality(cityCheck)
+//            Thread.sleep(1000)
             if(cityCheck.isNotEmpty()){
                 fetchWeather(cityCheck)
                 fetchForecast(cityCheck)
@@ -139,6 +144,63 @@ class MainPage : AppCompatActivity() {
         }
     }
 
+    private fun fetchGeolocality(city: String) {
+        val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
+        val url = "http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=5&appid=$apiKey"
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        val client = OkHttpClient.Builder()
+            .cache(null)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.v("GEOLOKACJE: ", e.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val json = response.body?.string()
+                if (json != null) {
+                    Log.v("GEOLOKACJE: ", json)
+                }
+                if (response.isSuccessful && json != null) {
+                    Log.v("GEOLOKACJE: ", "LOKALIZACJA poprawna, pobrałem jsona")
+                    val locationsData = Gson().fromJson(json, cityList::class.java)
+                    val outputJson: String = Gson().toJson(locationsData)
+                    createListOfCities(locationsData)
+                } else {
+                    Log.v("GEOLOKACJE: ", "Lokalizacja niepoprawna")
+                }
+            }
+        })
+    }
+
+    private fun createListOfCities(citiesList: cityList) : List<Location>{
+        Log.v("GEOLOKACJE: ", "tworze liste " + citiesList.toString())
+        val list = mutableListOf<Location>()
+        var counter = 0
+        citiesList.forEach { citySearchItem ->
+            Log.v("GEOLOKACJE: ", citySearchItem.name + ' ' + citySearchItem.country)
+            val location = Location(citySearchItem.name,citySearchItem.country)
+            list.add(counter, location)
+            counter++
+        }
+        Log.v("GEOLOKACJE: ", "lista: " + list.toString())
+        return list
+    }
+
+//    private fun openDialogWithCities(context: Context, citiesList: cityList){
+//        val builder = AlertDialog.Builder(context)
+//        builder.setTitle("Wybierz lokalizację")
+//        builder.setItems(citiesList) { dialog, which ->
+//            val wybranaLokalizacja = listaLokalizacji[which]
+//            println("Wybrana lokalizacja: $wybranaLokalizacja")
+//        }
+//        builder.show()
+//    }
+
     private fun clearAllCities(layout: LinearLayout, cityList: MutableSet<String>) {
         cityList.forEachIndexed { id, city ->
             Log.v("MIASTA: usuwam: ", city)
@@ -157,9 +219,7 @@ class MainPage : AppCompatActivity() {
             locationList.forEachIndexed{id, location ->
                 fetchWeather(location)
                 fetchForecast(location)
-//                addButton(layout, id, location)
                 Log.v("MIASTA: pobrano: ", "fetchData() " + location)
-//                addButtonWithDelete(layout, locationList.size, location)
                 addButtonWithRemoveButton(layout, locationList.size, location)
             }
         }
@@ -184,7 +244,7 @@ class MainPage : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 val json = response.body?.string()
                 if (json != null) {
-                    Log.v("LOCATION CHECK", json)
+                    Log.v("LOCATION CHECK: ", json.toString())
                 }
                 if (response.isSuccessful && json != null) {
                     Log.v("LOCATION CHECK", "LOKALIZACJA poprawna")
