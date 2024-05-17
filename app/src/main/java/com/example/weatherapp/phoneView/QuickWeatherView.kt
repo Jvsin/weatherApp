@@ -2,6 +2,7 @@ package com.example.weatherapp.phoneView
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -15,6 +16,7 @@ import com.example.weatherapp.fragments.BasicDataFragment
 import com.example.weatherapp.fragments.ForecastFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -43,6 +45,7 @@ class QuickWeatherView : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         removeLocation(location)
+        this.finish()
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
@@ -169,14 +172,27 @@ class QuickWeatherView : AppCompatActivity() {
         val json = sharedPreferences.getString("locations", null)
         val type = object : TypeToken<Set<String>>() {}.type
         var locations: Set<String> = gson.fromJson(json, type)
-
+        Log.v("MIASTA: usuwam lokalizacje: ", locationToRemove)
         if (locations.contains(locationToRemove)) {
             locations = locations.filter { it != locationToRemove }.toSet()
-
             val editor = sharedPreferences.edit()
             val newJson = gson.toJson(locations)
+            editor.remove(locationToRemove)
             editor.putString("locations", newJson)
             editor.apply()
+        }
+        val dir = File(filesDir.parent + "/shared_prefs/")
+        val file = File(dir, "$locationToRemove.xml")
+
+        if (file.exists()) {
+            val deleted = file.delete()
+            if (deleted) {
+                Log.v("Usuwanie pliku", "Plik $locationToRemove SharedPreferences został usunięty")
+            } else {
+                Log.v("Usuwanie pliku", "Nie udało się usunąć pliku SharedPreferences")
+            }
+        } else {
+            Log.v("Usuwanie pliku", "Plik SharedPreferences nie istnieje")
         }
     }
 }

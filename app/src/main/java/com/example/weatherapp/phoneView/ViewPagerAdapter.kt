@@ -68,7 +68,7 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp
         val basicDataFrag = BasicDataFragment()
         val bundle = Bundle()
 
-        bundle.putString("city", weather?.name)
+        bundle.putString("city", location)
         bundle.putString("temperature", weather?.main?.let { temperatureConvert(it.temp, tempUnit) })
         bundle.putString("status", weather?.weather?.get(0)?.description)
         bundle.putString("weatherID", weather?.weather?.get(0)?.id.toString())
@@ -227,7 +227,7 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp
             override fun run() {
                 loadForecastData()
                 loadWeatherData()
-                Log.v("TIMER: aktualizacja dla: ", location)
+                Log.v("TIMER:", " aktualizacja dla: " + location)
             }
         },0,  10000 * 15
         )

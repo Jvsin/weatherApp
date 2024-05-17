@@ -31,6 +31,7 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.io.File
 import java.io.IOException
 import java.util.Timer
 import java.util.TimerTask
@@ -234,16 +235,18 @@ class MainPage : AppCompatActivity() {
             builder.setPositiveButton("Dodaj do listy") { dialog, which ->
                 if(correctLocationFlag){
                     var locationList = allCities as MutableSet<String>
-                    val added: Set<String> = (locationList + selectedCity).toSet()
+                    val added: MutableSet<String> = (locationList + selectedCity).toMutableSet()
                     saveLocations(added)
                     addButtonWithRemoveButton(layout, added.size - 1, selectedCity)
                     fetchWeather(selectedCity)
                     fetchForecast(selectedCity)
-                    allCities = added as MutableSet<String>
+                    allCities = added
+                    Log.v("MIASTA: ", "MUTABLE LIST: " + allCities.toString())
                     input.text.clear()
                 }
             }
             builder.setNegativeButton("Zamknij") { dialog, which ->
+                removeLocation(selectedCity)
                 input.text.clear()
                 correctLocationFlag = true
             }
@@ -271,12 +274,12 @@ class MainPage : AppCompatActivity() {
     }
 
     private fun fetchData(locationList: Set<String>, layout: LinearLayout) {
-        if(locationList.isNotEmpty()){
-            locationList.forEachIndexed{id, location ->
+        if(allCities?.isNotEmpty() == true){
+            allCities?.forEachIndexed{id, location ->
                 fetchWeather(location)
                 fetchForecast(location)
                 Log.v("MIASTA: pobrano: ", "fetchData() " + location)
-                addButtonWithRemoveButton(layout, locationList.size, location)
+                allCities?.size?.let { addButtonWithRemoveButton(layout, it, location) }
             }
         }
     }
@@ -433,7 +436,7 @@ class MainPage : AppCompatActivity() {
     }
 
 
-    fun addButtonWithRemoveButton(layout: LinearLayout, buttonId: Int, location: String) {
+    private fun addButtonWithRemoveButton(layout: LinearLayout, buttonId: Int, location: String) {
         val buttonLayout = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             layoutParams = LinearLayout.LayoutParams(
@@ -479,9 +482,11 @@ class MainPage : AppCompatActivity() {
                 0.2f) // waga
             setOnClickListener {
                 layout.removeView(buttonLayout)
-                removeWeatherData(location)
-                removeForecastData(location)
+//                removeWeatherData(location)
+//                removeForecastData(location)
                 removeLocation(location)
+                Log.v("MIASTA: ", "usuwanie " + location)
+                Log.v("MIASTA: ", "allCities " + allCities.toString())
                 allCities?.remove(location)
                 Log.v("MIASTA: lista allCities po:", allCities.toString())
                 Log.v("MIASTA: lista po:", loadLocations().toString())
@@ -517,7 +522,7 @@ class MainPage : AppCompatActivity() {
     }
 
 
-    fun removeLocation(locationToRemove: String) {
+    private fun removeLocation(locationToRemove: String) {
         val sharedPreferences = getSharedPreferences("city_list", Context.MODE_PRIVATE)
         val gson = Gson()
         val json = sharedPreferences.getString("locations", null)
@@ -532,6 +537,20 @@ class MainPage : AppCompatActivity() {
             editor.putString("locations", newJson)
             editor.apply()
             Log.v("MIASTA: po usunieciu lokalizacji: ", locationToRemove + ' ' + loadLocations().toString())
+        }
+
+        val dir = File(filesDir.parent + "/shared_prefs/")
+        val file = File(dir, "$locationToRemove.xml")
+
+        if (file.exists()) {
+            val deleted = file.delete()
+            if (deleted) {
+                Log.v("Usuwanie pliku", "Plik $locationToRemove SharedPreferences został usunięty")
+            } else {
+                Log.v("Usuwanie pliku", "Nie udało się usunąć pliku SharedPreferences")
+            }
+        } else {
+            Log.v("Usuwanie pliku", "Plik SharedPreferences nie istnieje")
         }
     }
 
@@ -595,7 +614,7 @@ class MainPage : AppCompatActivity() {
                 allCities?.forEachIndexed{ id, location ->
                     fetchWeather(location)
                     fetchForecast(location)
-                    Log.v("TIMER: pobrał: ", location)
+                    Log.v("TIMER"," pobrał: " +  location)
                 }
             }
         },0,  60000 * 10
