@@ -217,14 +217,14 @@ class MainPage : AppCompatActivity() {
                 if(correctLocationFlag){
                     if(!isTablet()){
                         val intent = Intent(this, QuickWeatherView::class.java)
-                        intent.putExtra("location", check.name)
+                        intent.putExtra("location", selectedCity)
                         intent.putExtra("tempUnit", actualTempUnit.toString())
                         intent.putExtra("distUnit", actualDistUnit.toString())
                         startActivity(intent)
                     }
                     else {
                         val intent = Intent(this, QuickWeatherTablet::class.java)
-                        intent.putExtra("location", check.name)
+                        intent.putExtra("location", selectedCity)
                         intent.putExtra("tempUnit", actualTempUnit.toString())
                         intent.putExtra("distUnit", actualDistUnit.toString())
                         startActivity(intent)
@@ -234,9 +234,9 @@ class MainPage : AppCompatActivity() {
             builder.setPositiveButton("Dodaj do listy") { dialog, which ->
                 if(correctLocationFlag){
                     var locationList = allCities as MutableSet<String>
-                    val added: Set<String> = (locationList + check.name).toSet()
+                    val added: Set<String> = (locationList + selectedCity).toSet()
                     saveLocations(added)
-                    addButtonWithRemoveButton(layout, added.size - 1, check.name)
+                    addButtonWithRemoveButton(layout, added.size - 1, selectedCity)
                     fetchWeather(selectedCity)
                     fetchForecast(selectedCity)
                     allCities = added as MutableSet<String>
@@ -528,6 +528,7 @@ class MainPage : AppCompatActivity() {
             locations = locations.filter { it != locationToRemove }.toSet()
             val editor = sharedPreferences.edit()
             val newJson = gson.toJson(locations)
+            editor.remove(locationToRemove)
             editor.putString("locations", newJson)
             editor.apply()
             Log.v("MIASTA: po usunieciu lokalizacji: ", locationToRemove + ' ' + loadLocations().toString())
