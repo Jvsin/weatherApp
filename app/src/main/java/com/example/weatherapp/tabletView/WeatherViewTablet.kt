@@ -16,6 +16,7 @@ import com.example.weatherapp.fragments.BasicDataFragment
 import com.example.weatherapp.fragments.ForecastFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -59,6 +60,7 @@ class WeatherViewTablet : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
+        this.finish()
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
@@ -84,7 +86,7 @@ class WeatherViewTablet : AppCompatActivity() {
         val basicDataFrag = BasicDataFragment()
         val bundle = Bundle()
 
-        bundle.putString("city", weather?.name)
+        bundle.putString("city", location)
         bundle.putString("temperature", weather?.main?.let { temperatureConvert(it.temp, tempUnit) })
         bundle.putString("status", weather?.weather?.get(0)?.description)
         bundle.putString("weatherID", weather?.weather?.get(0)?.id.toString())
@@ -248,5 +250,6 @@ class WeatherViewTablet : AppCompatActivity() {
         },0,  10000 * 15
         )
     }
+
 
 }
