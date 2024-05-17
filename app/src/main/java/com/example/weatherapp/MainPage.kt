@@ -41,15 +41,18 @@ class MainPage : AppCompatActivity() {
     var actualTempUnit: Temperatures = Temperatures.CELSIUS
     var actualDistUnit: Distance = Distance.METERS
     var allCities: MutableSet<String>? = null
-    var correctLocationFlag: Boolean = true
+    var correctLocationFlag: Boolean = true  //do wywalenia, już tego nie uzywam
     var searchedLocations: cityList? = null
+    var selectedCity: String = ""
+    private lateinit var layout: LinearLayout
+    private lateinit var input: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
 
-        val layout = findViewById<LinearLayout>(R.id.cityList)
-        val input = findViewById<EditText>(R.id.location_input)
+        layout = findViewById<LinearLayout>(R.id.cityList)
+        input = findViewById<EditText>(R.id.location_input)
 
         settingsUse()
 
@@ -65,57 +68,57 @@ class MainPage : AppCompatActivity() {
         val showBtn: Button = findViewById(R.id.show_button)
         showBtn.setOnClickListener {
             val cityCheck: String = setCorrectString(input.text.toString())
-//            checkLocation(cityCheck)
-            fetchGeolocality(cityCheck)
-//            Thread.sleep(1000)
-            if(cityCheck.isNotEmpty()){
-                fetchWeather(cityCheck)
-                fetchForecast(cityCheck)
 
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("NOWA LOKALIZACJA")
-                builder.setMessage(cityCheck)
-                builder.setNeutralButton("Otwórz") { dialog, which ->
-                    if(correctLocationFlag){
-                        if(!isTablet()){
-                            val intent = Intent(this, QuickWeatherView::class.java)
-                            intent.putExtra("location", cityCheck)
-                            intent.putExtra("tempUnit", actualTempUnit.toString())
-                            intent.putExtra("distUnit", actualDistUnit.toString())
-                            startActivity(intent)
-                        }
-                        else {
-                            val intent = Intent(this, QuickWeatherTablet::class.java)
-                            intent.putExtra("location", cityCheck)
-                            intent.putExtra("tempUnit", actualTempUnit.toString())
-                            intent.putExtra("distUnit", actualDistUnit.toString())
-                            startActivity(intent)
-                        }
-                    }
-                    else {
-                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                builder.setPositiveButton("Dodaj do listy") { dialog, which ->
-                    if(correctLocationFlag){
-                        val added: Set<String> = (locationList + cityCheck).toSet()
-                        saveLocations(added)
-                        addButtonWithRemoveButton(layout, added.size - 1, cityCheck)
-                        fetchWeather(cityCheck)
-                        fetchForecast(cityCheck)
-                        locationList = added
-                        input.text.clear()
-                    }
-                    else {
-                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                builder.setNegativeButton("Zamknij") { dialog, which ->
-                    input.text.clear()
-                    correctLocationFlag = true
-                }
-                builder.show()
-                correctLocationFlag = true
+            if(cityCheck.isNotEmpty()){
+                fetchGeolocality(cityCheck, this)
+
+//                fetchWeather(cityCheck)
+//                fetchForecast(cityCheck)
+
+//                val builder = AlertDialog.Builder(this)
+//                builder.setTitle("NOWA LOKALIZACJA")
+//                builder.setMessage(cityCheck)
+//                builder.setNeutralButton("Otwórz") { dialog, which ->
+//                    if(correctLocationFlag){
+//                        if(!isTablet()){
+//                            val intent = Intent(this, QuickWeatherView::class.java)
+//                            intent.putExtra("location", cityCheck)
+//                            intent.putExtra("tempUnit", actualTempUnit.toString())
+//                            intent.putExtra("distUnit", actualDistUnit.toString())
+//                            startActivity(intent)
+//                        }
+//                        else {
+//                            val intent = Intent(this, QuickWeatherTablet::class.java)
+//                            intent.putExtra("location", cityCheck)
+//                            intent.putExtra("tempUnit", actualTempUnit.toString())
+//                            intent.putExtra("distUnit", actualDistUnit.toString())
+//                            startActivity(intent)
+//                        }
+//                    }
+//                    else {
+//                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//                builder.setPositiveButton("Dodaj do listy") { dialog, which ->
+//                    if(correctLocationFlag){
+//                        val added: Set<String> = (locationList + cityCheck).toSet()
+//                        saveLocations(added)
+//                        addButtonWithRemoveButton(layout, added.size - 1, cityCheck)
+//                        fetchWeather(cityCheck)
+//                        fetchForecast(cityCheck)
+//                        locationList = added
+//                        input.text.clear()
+//                    }
+//                    else {
+//                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//                builder.setNegativeButton("Zamknij") { dialog, which ->
+//                    input.text.clear()
+//                    correctLocationFlag = true
+//                }
+//                builder.show()
+//                correctLocationFlag = true
             }
 
         }
@@ -144,7 +147,7 @@ class MainPage : AppCompatActivity() {
         }
     }
 
-    private fun fetchGeolocality(city: String) {
+    private fun fetchGeolocality(city: String, context: Context) {
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
         val url = "http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=5&appid=$apiKey"
         val request = Request.Builder()
@@ -169,7 +172,10 @@ class MainPage : AppCompatActivity() {
                     Log.v("GEOLOKACJE: ", "LOKALIZACJA poprawna, pobrałem jsona")
                     val locationsData = Gson().fromJson(json, cityList::class.java)
                     val outputJson: String = Gson().toJson(locationsData)
-                    createListOfCities(locationsData)
+//                    createListOfCities(locationsData)
+                    runOnUiThread{
+                        openDialogWithCities(context, locationsData)
+                    }
                 } else {
                     Log.v("GEOLOKACJE: ", "Lokalizacja niepoprawna")
                 }
@@ -183,7 +189,7 @@ class MainPage : AppCompatActivity() {
         var counter = 0
         citiesList.forEach { citySearchItem ->
             Log.v("GEOLOKACJE: ", citySearchItem.name + ' ' + citySearchItem.country)
-            val location = Location(citySearchItem.name,citySearchItem.country)
+            val location = Location(citySearchItem.name, citySearchItem.country)
             list.add(counter, location)
             counter++
         }
@@ -191,15 +197,65 @@ class MainPage : AppCompatActivity() {
         return list
     }
 
-//    private fun openDialogWithCities(context: Context, citiesList: cityList){
-//        val builder = AlertDialog.Builder(context)
-//        builder.setTitle("Wybierz lokalizację")
-//        builder.setItems(citiesList) { dialog, which ->
-//            val wybranaLokalizacja = listaLokalizacji[which]
-//            println("Wybrana lokalizacja: $wybranaLokalizacja")
-//        }
-//        builder.show()
-//    }
+    private fun openDialogWithCities(context: Context, searchedCities: cityList){
+        var citiesList: List<Location> = createListOfCities(searchedCities)
+        val citiesArray = citiesList.map { "${it.name}, ${it.country}" }.toTypedArray()
+
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Znaleziono: ")
+        builder.setItems(citiesArray) { dialog, which ->
+            val check = citiesList[which]
+            selectedCity = check.name + ',' + check.country
+
+            fetchWeather(selectedCity)
+            fetchForecast(selectedCity)
+
+//            val builder = AlertDialog.Builder(this)
+            builder.setTitle("NOWA LOKALIZACJA")
+            builder.setMessage(selectedCity)
+            builder.setNeutralButton("Otwórz") { dialog, which ->
+                if(correctLocationFlag){
+                    if(!isTablet()){
+                        val intent = Intent(this, QuickWeatherView::class.java)
+                        intent.putExtra("location", check.name)
+                        intent.putExtra("tempUnit", actualTempUnit.toString())
+                        intent.putExtra("distUnit", actualDistUnit.toString())
+                        startActivity(intent)
+                    }
+                    else {
+                        val intent = Intent(this, QuickWeatherTablet::class.java)
+                        intent.putExtra("location", check.name)
+                        intent.putExtra("tempUnit", actualTempUnit.toString())
+                        intent.putExtra("distUnit", actualDistUnit.toString())
+                        startActivity(intent)
+                    }
+                }
+            }
+            builder.setPositiveButton("Dodaj do listy") { dialog, which ->
+                if(correctLocationFlag){
+                    var locationList = allCities as MutableSet<String>
+                    val added: Set<String> = (locationList + check.name).toSet()
+                    saveLocations(added)
+                    addButtonWithRemoveButton(layout, added.size - 1, check.name)
+                    fetchWeather(selectedCity)
+                    fetchForecast(selectedCity)
+                    allCities = added as MutableSet<String>
+                    input.text.clear()
+                }
+            }
+            builder.setNegativeButton("Zamknij") { dialog, which ->
+                input.text.clear()
+                correctLocationFlag = true
+            }
+            builder.show()
+            correctLocationFlag = true
+        }
+        builder.setNegativeButton("Anuluj") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
 
     private fun clearAllCities(layout: LinearLayout, cityList: MutableSet<String>) {
         cityList.forEachIndexed { id, city ->
@@ -259,6 +315,7 @@ class MainPage : AppCompatActivity() {
         return correctLocationFlag
     }
     private fun fetchWeather(location: String){
+        Log.v("location check", location)
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
         val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey&lang=pl"
 
