@@ -60,7 +60,6 @@ class WeatherViewTablet : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
-        this.finish()
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {

@@ -45,7 +45,6 @@ class QuickWeatherView : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         removeLocation(location)
-        this.finish()
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
