@@ -33,6 +33,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:text="@string/pressure"
                 android:textColor="@color/white"/>
@@ -45,6 +46,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:textColor="@color/white"
                 android:text="1004hPa"/>
@@ -81,6 +83,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:text="@string/humidity"
                 android:textColor="@color/white"/>
@@ -93,6 +96,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:textColor="@color/white"
                 android:text="32%"/>
@@ -128,6 +132,7 @@
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="@string/clouds"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -140,6 +145,7 @@
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="0%"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -175,6 +181,7 @@
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="@string/visibility"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -187,6 +194,7 @@
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="0%"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -218,6 +226,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:text="@string/wind"
                 android:textColor="@color/white"/>
@@ -230,6 +239,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:textColor="@color/white"
                 android:text="40 m/s"/>
@@ -255,6 +265,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="25sp"
                 android:text="@string/windDirection"
                 android:textColor="@color/white"/>
@@ -265,6 +276,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="20sp"
                 android:text="Północny wschód" />
 

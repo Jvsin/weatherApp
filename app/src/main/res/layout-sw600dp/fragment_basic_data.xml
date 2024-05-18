@@ -25,6 +25,7 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_width="match_parent"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_height="wrap_content"
                 android:textSize="50sp"
                 android:text="city" />
@@ -58,6 +59,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="7st"
                 android:textSize="60sp"/>
             <LinearLayout
@@ -73,7 +75,7 @@
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeStepGranularity="2sp"
                     android:textSize="20sp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/white"/>
                 <TextView
                     android:id="@+id/feelsLike"
@@ -102,7 +104,7 @@
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeStepGranularity="2sp"
                     android:textSize="20sp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/white"/>
                 <TextView
                     android:id="@+id/tempMin"
@@ -113,7 +115,7 @@
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeStepGranularity="2sp"
                     android:textSize="20sp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/white"/>
 
                 <Space
@@ -129,13 +131,13 @@
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeStepGranularity="2sp"
                     android:textSize="20sp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/white"/>
                 <TextView
                     android:id="@+id/tempMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="sans-serif-condensed"
                     android:autoSizeMinTextSize="12sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeStepGranularity="2sp"
@@ -170,6 +172,7 @@
                 android:autoSizeStepGranularity="2sp"
                 android:textSize="20sp"
                 android:text="bezchmurnie"
+                android:fontFamily="sans-serif-condensed"
                 />
         </LinearLayout>
 
