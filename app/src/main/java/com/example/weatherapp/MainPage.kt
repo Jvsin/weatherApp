@@ -1,7 +1,9 @@
 package com.example.weatherapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -42,8 +44,6 @@ class MainPage : AppCompatActivity() {
     var actualTempUnit: Temperatures = Temperatures.CELSIUS
     var actualDistUnit: Distance = Distance.METERS
     var allCities: MutableSet<String>? = null
-    var correctLocationFlag: Boolean = true  //do wywalenia, już tego nie uzywam
-    var searchedLocations: cityList? = null
     var selectedCity: String = ""
     private lateinit var layout: LinearLayout
     private lateinit var input: EditText
@@ -72,68 +72,29 @@ class MainPage : AppCompatActivity() {
 
             if(cityCheck.isNotEmpty()){
                 fetchGeolocality(cityCheck, this)
-
-//                fetchWeather(cityCheck)
-//                fetchForecast(cityCheck)
-
-//                val builder = AlertDialog.Builder(this)
-//                builder.setTitle("NOWA LOKALIZACJA")
-//                builder.setMessage(cityCheck)
-//                builder.setNeutralButton("Otwórz") { dialog, which ->
-//                    if(correctLocationFlag){
-//                        if(!isTablet()){
-//                            val intent = Intent(this, QuickWeatherView::class.java)
-//                            intent.putExtra("location", cityCheck)
-//                            intent.putExtra("tempUnit", actualTempUnit.toString())
-//                            intent.putExtra("distUnit", actualDistUnit.toString())
-//                            startActivity(intent)
-//                        }
-//                        else {
-//                            val intent = Intent(this, QuickWeatherTablet::class.java)
-//                            intent.putExtra("location", cityCheck)
-//                            intent.putExtra("tempUnit", actualTempUnit.toString())
-//                            intent.putExtra("distUnit", actualDistUnit.toString())
-//                            startActivity(intent)
-//                        }
-//                    }
-//                    else {
-//                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                builder.setPositiveButton("Dodaj do listy") { dialog, which ->
-//                    if(correctLocationFlag){
-//                        val added: Set<String> = (locationList + cityCheck).toSet()
-//                        saveLocations(added)
-//                        addButtonWithRemoveButton(layout, added.size - 1, cityCheck)
-//                        fetchWeather(cityCheck)
-//                        fetchForecast(cityCheck)
-//                        locationList = added
-//                        input.text.clear()
-//                    }
-//                    else {
-//                        Toast.makeText(this, "Lokalizacja nieprawidłowa", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                builder.setNegativeButton("Zamknij") { dialog, which ->
-//                    input.text.clear()
-//                    correctLocationFlag = true
-//                }
-//                builder.show()
-//                correctLocationFlag = true
             }
 
         }
 
         val dataFetchBtn: Button = findViewById(R.id.fetchData)
         dataFetchBtn.setOnClickListener {
-            locationList = allCities as MutableSet<String>
-            if (locationList.isNotEmpty()) {
-                locationList.forEach { location, ->
-                    fetchWeather(location)
-                    fetchForecast(location)
+            val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork = connectivityManager.activeNetworkInfo
+            val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
+
+            if(isConnected){
+                locationList = allCities as MutableSet<String>
+                if (locationList.isNotEmpty()) {
+                    locationList.forEach { location, ->
+                        fetchWeather(location)
+                        fetchForecast(location)
+                    }
                 }
+                Toast.makeText(this, "Pobrano najnowsze dane", Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(this, "Pobrano najnowsze dane", Toast.LENGTH_SHORT).show()
+            else {
+                Toast.makeText(this, "Brak połączenia z internetem", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val cityRemoveBtn: Button = findViewById(R.id.deleteCity)
@@ -148,41 +109,51 @@ class MainPage : AppCompatActivity() {
         }
     }
 
+//    @SuppressLint("ServiceCast")
     private fun fetchGeolocality(city: String, context: Context) {
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
         val url = "http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=5&appid=$apiKey"
-        val request = Request.Builder()
-            .url(url)
-            .build()
 
-        val client = OkHttpClient.Builder()
-            .cache(null)
-            .build()
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetworkInfo
+        val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.v("GEOLOKACJE: ", e.toString())
-            }
+        if (isConnected) {
+            val request = Request.Builder()
+                .url(url)
+                .build()
 
-            override fun onResponse(call: Call, response: Response) {
-                val json = response.body?.string()
-                if (json != null) {
-                    Log.v("GEOLOKACJE: ", json)
+            val client = OkHttpClient.Builder()
+                .cache(null)
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.v("GEOLOKACJE: ", e.toString())
                 }
-                if (response.isSuccessful && json != null) {
-                    Log.v("GEOLOKACJE: ", "LOKALIZACJA poprawna, pobrałem jsona")
-                    val locationsData = Gson().fromJson(json, cityList::class.java)
-                    val outputJson: String = Gson().toJson(locationsData)
-//                    createListOfCities(locationsData)
-                    runOnUiThread{
-                        openDialogWithCities(context, locationsData)
+
+                override fun onResponse(call: Call, response: Response) {
+                    val json = response.body?.string()
+                    if (json != null) {
+                        Log.v("GEOLOKACJE: ", json)
                     }
-                } else {
-                    Log.v("GEOLOKACJE: ", "Lokalizacja niepoprawna")
+                    if (response.isSuccessful && json != null) {
+                        Log.v("GEOLOKACJE: ", "LOKALIZACJA poprawna, pobrałem jsona")
+                        val locationsData = Gson().fromJson(json, cityList::class.java)
+                        val outputJson: String = Gson().toJson(locationsData)
+                        runOnUiThread {
+                            openDialogWithCities(context, locationsData)
+                        }
+                    } else {
+                        Log.v("GEOLOKACJE: ", "Lokalizacja niepoprawna")
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            Toast.makeText(this, "Brak połączenia z internetem", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     private fun createListOfCities(citiesList: cityList) : List<Location>{
         Log.v("GEOLOKACJE: ", "tworze liste " + citiesList.toString())
@@ -215,43 +186,37 @@ class MainPage : AppCompatActivity() {
             builder.setTitle("NOWA LOKALIZACJA")
             builder.setMessage(selectedCity)
             builder.setNeutralButton("Otwórz") { dialog, which ->
-                if(correctLocationFlag){
-                    if(!isTablet()){
-                        val intent = Intent(this, QuickWeatherView::class.java)
-                        intent.putExtra("location", selectedCity)
-                        intent.putExtra("tempUnit", actualTempUnit.toString())
-                        intent.putExtra("distUnit", actualDistUnit.toString())
-                        startActivity(intent)
-                    }
-                    else {
-                        val intent = Intent(this, QuickWeatherTablet::class.java)
-                        intent.putExtra("location", selectedCity)
-                        intent.putExtra("tempUnit", actualTempUnit.toString())
-                        intent.putExtra("distUnit", actualDistUnit.toString())
-                        startActivity(intent)
-                    }
+                if(!isTablet()){
+                    val intent = Intent(this, QuickWeatherView::class.java)
+                    intent.putExtra("location", selectedCity)
+                    intent.putExtra("tempUnit", actualTempUnit.toString())
+                    intent.putExtra("distUnit", actualDistUnit.toString())
+                    startActivity(intent)
+                }
+                else {
+                    val intent = Intent(this, QuickWeatherTablet::class.java)
+                    intent.putExtra("location", selectedCity)
+                    intent.putExtra("tempUnit", actualTempUnit.toString())
+                    intent.putExtra("distUnit", actualDistUnit.toString())
+                    startActivity(intent)
                 }
             }
             builder.setPositiveButton("Dodaj do listy") { dialog, which ->
-                if(correctLocationFlag){
-                    var locationList = allCities as MutableSet<String>
-                    val added: MutableSet<String> = (locationList + selectedCity).toMutableSet()
-                    saveLocations(added)
-                    addButtonWithRemoveButton(layout, added.size - 1, selectedCity)
-                    fetchWeather(selectedCity)
-                    fetchForecast(selectedCity)
-                    allCities = added
-                    Log.v("MIASTA: ", "MUTABLE LIST: " + allCities.toString())
-                    input.text.clear()
-                }
+                var locationList = allCities as MutableSet<String>
+                val added: MutableSet<String> = (locationList + selectedCity).toMutableSet()
+                saveLocations(added)
+                addButtonWithRemoveButton(layout, added.size - 1, selectedCity)
+                fetchWeather(selectedCity)
+                fetchForecast(selectedCity)
+                allCities = added
+                Log.v("MIASTA: ", "MUTABLE LIST: " + allCities.toString())
+                input.text.clear()
             }
             builder.setNegativeButton("Zamknij") { dialog, which ->
                 removeLocation(selectedCity)
                 input.text.clear()
-                correctLocationFlag = true
             }
             builder.show()
-            correctLocationFlag = true
         }
         builder.setNegativeButton("Anuluj") { dialog, _ ->
             dialog.dismiss()
@@ -284,39 +249,6 @@ class MainPage : AppCompatActivity() {
         }
     }
 
-    private fun checkLocation(location: String) : Boolean {
-        val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
-        val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey&lang=pl"
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        val client = OkHttpClient.Builder()
-            .cache(null)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.v("check", e.toString())
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val json = response.body?.string()
-                if (json != null) {
-                    Log.v("LOCATION CHECK: ", json.toString())
-                }
-                if (response.isSuccessful && json != null) {
-                    Log.v("LOCATION CHECK", "LOKALIZACJA poprawna")
-                    correctLocationFlag = true
-
-                } else {
-                    Log.v("LOCATION CHECK", "Lokalizacja niepoprawna")
-                    correctLocationFlag = false
-                }
-            }
-        })
-        return correctLocationFlag
-    }
     private fun fetchWeather(location: String){
         Log.v("location check", location)
         val apiKey = "6e88eafae4cebe1a2a7de5aedb56ee7b"
@@ -342,7 +274,6 @@ class MainPage : AppCompatActivity() {
 
                 }
                 if (response.isSuccessful && json != null) {
-//                    correctLocationFlag = true
                     val weatherData = Gson().fromJson(json, weatherClass::class.java)
                     val outputJson: String = Gson().toJson(weatherData)
 
@@ -353,7 +284,6 @@ class MainPage : AppCompatActivity() {
 //                    }
                 } else {
                     Log.v("BOOLEAN: ", "Nieprawidłowa lokalizacja")
-//                    correctLocationFlag = false
                 }
             }
         })
