@@ -229,13 +229,15 @@ class MainPage : AppCompatActivity() {
         cityList.forEachIndexed { id, city ->
             Log.v("MIASTA: usuwam: ", city)
             removeButton(layout, id)
-            removeWeatherData(city)
-            removeForecastData(city)
+//            removeWeatherData(city)
+//            removeForecastData(city)
             removeLocation(city)
         }
         cityList.clear()
+        Log.v("MIASTA:", "clearAll po wszystkim: " + cityList.toString())
         allCities = cityList
-//        saveLocations(cityList)
+        Log.v("MIASTA:", "allcities po wszystkim: " + allCities.toString())
+        saveLocations(cityList)
     }
 
     private fun fetchData(locationList: Set<String>, layout: LinearLayout) {
