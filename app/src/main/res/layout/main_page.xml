@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
+    android:background="@drawable/main_menu_background"
     >
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:hint="Wprowadź lokalizacje"/>
+            android:hint="@string/selectLocation"/>
 
 <!--        <AutoCompleteTextView-->
 <!--            android:id="@+id/location_input"-->
@@ -32,9 +33,11 @@
 
         <Button
             android:id="@+id/show_button"
+            android:backgroundTint="@color/better_orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="sans-serif"
             android:text="Szukaj"
             android:autoSizeTextType="uniform"/>
 
@@ -50,19 +53,23 @@
         >
         <Button
             android:id="@+id/fetchData"
+            android:backgroundTint="@color/better_orange"
             android:text="@string/fetchData"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:autoSizeTextType="uniform"
+            android:fontFamily="sans-serif"
             />
         <Button
             android:id="@+id/deleteCity"
+            android:backgroundTint="@color/red"
             android:text="@string/deleteCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:autoSizeTextType="uniform"/>
+            android:autoSizeTextType="uniform"
+            android:fontFamily="sans-serif"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/changeUnitsLayout"

@@ -18,4 +18,5 @@
     <string name="visibility">WIDOCZNOŚĆ</string>
     <string name="set_units">Ustaw jednostki:</string>
     <string name="windDirection">KIERUNEK WIATRU</string>
+    <string name="selectLocation">Wprowadź lokalizacje</string>
 </resources>

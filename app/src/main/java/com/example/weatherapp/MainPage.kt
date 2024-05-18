@@ -3,6 +3,7 @@ package com.example.weatherapp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -411,6 +412,7 @@ class MainPage : AppCompatActivity() {
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, // Wysokość
                 0.2f) // waga
+            setTextColor(Color.RED)
             setOnClickListener {
                 layout.removeView(buttonLayout)
 //                removeWeatherData(location)
@@ -568,7 +570,6 @@ class MainPage : AppCompatActivity() {
                 actualDistUnit = Distance.METERS
             }
         }
-//        saveSettings(actualTempUnit, actualDistUnit)
     }
 
     private fun isTablet(): Boolean {

@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@drawable/second_main_background">
+    android:background="@drawable/day_weather_background">
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"

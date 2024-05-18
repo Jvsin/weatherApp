@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/main_menu_background"
     tools:context=".MainActivity"
     >
 
@@ -23,6 +24,7 @@
             android:hint="Wprowadź lokalizacje"/>
         <Button
             android:id="@+id/show_button"
+            android:backgroundTint="@color/better_orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,6 +43,7 @@
         >
         <Button
             android:id="@+id/fetchData"
+            android:backgroundTint="@color/better_orange"
             android:text="@string/fetchData"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,6 +52,7 @@
             />
         <Button
             android:id="@+id/deleteCity"
+            android:backgroundTint="@color/red"
             android:text="@string/deleteCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
