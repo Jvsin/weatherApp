@@ -73,7 +73,6 @@ class MainPage : AppCompatActivity() {
             if(cityCheck.isNotEmpty()){
                 fetchGeolocality(cityCheck, this)
             }
-
         }
 
         val dataFetchBtn: Button = findViewById(R.id.fetchData)
@@ -453,6 +452,27 @@ class MainPage : AppCompatActivity() {
         return gson.fromJson(json, type) ?: emptySet()
     }
 
+    fun saveSettings(temp: Temperatures, dist: Distance) {
+        val sharedPreferences = getSharedPreferences("city_list", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val jsonTemp = gson.toJson(temp)
+        editor.putString("temperature", jsonTemp)
+        val jsonDist = gson.toJson(dist)
+        editor.putString("distance", jsonDist)
+        editor.apply()
+    }
+    fun setSettings() : Pair<Temperatures, Distance>  {
+        val sharedPreferences = getSharedPreferences("city_list", Context.MODE_PRIVATE)
+        val gson = Gson()
+
+        val temperatureJson = sharedPreferences.getString("temperature", null)
+        val distanceJson = sharedPreferences.getString("distance", null)
+
+        var temp = gson.fromJson(temperatureJson, Temperatures::class.java)
+        var dist = gson.fromJson(distanceJson, Distance::class.java)
+        return Pair(temp, dist)
+    }
 
     private fun removeLocation(locationToRemove: String) {
         val sharedPreferences = getSharedPreferences("city_list", Context.MODE_PRIVATE)
@@ -487,10 +507,20 @@ class MainPage : AppCompatActivity() {
     }
 
     private fun settingsUse(){
+        var sett = setSettings()
+
         val tempSpinner = findViewById<Spinner>(R.id.chooseTempUnits)
         val tempUnits = arrayOf("Celsjusze", "Kelviny", "Farenhajty")
         val adapterTemp = ArrayAdapter(this, android.R.layout.simple_spinner_item, tempUnits)
         tempSpinner.adapter = adapterTemp
+
+        var initialPosition = when (sett.first) {
+            Temperatures.KELVINS -> 1
+            Temperatures.FAHRENHEITS -> 2
+            else -> 0
+        }
+
+        tempSpinner.setSelection(initialPosition)
 
         tempSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -501,6 +531,7 @@ class MainPage : AppCompatActivity() {
                     "Farenhajty" -> Temperatures.FAHRENHEITS
                     else -> Temperatures.CELSIUS
                 }
+                saveSettings(actualTempUnit, actualDistUnit)
                 Toast.makeText(parent?.context, "Wybrano: $unit", Toast.LENGTH_SHORT).show()
             }
 
@@ -514,6 +545,13 @@ class MainPage : AppCompatActivity() {
         val adapterDist = ArrayAdapter(this, android.R.layout.simple_spinner_item, distUnits)
         distSpinner.adapter = adapterDist
 
+        initialPosition = when (sett.second) {
+            Distance.MILES -> 1
+            else -> 0
+        }
+
+        distSpinner.setSelection(initialPosition)
+
         distSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val unit = parent?.getItemAtPosition(position).toString()
@@ -522,6 +560,7 @@ class MainPage : AppCompatActivity() {
                     "Mile" -> Distance.MILES
                     else -> Distance.METERS
                 }
+                saveSettings(actualTempUnit, actualDistUnit)
                 Toast.makeText(parent?.context, "Wybrano: $unit", Toast.LENGTH_SHORT).show()
             }
 
@@ -529,6 +568,7 @@ class MainPage : AppCompatActivity() {
                 actualDistUnit = Distance.METERS
             }
         }
+//        saveSettings(actualTempUnit, actualDistUnit)
     }
 
     private fun isTablet(): Boolean {
