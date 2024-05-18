@@ -24,11 +24,12 @@
             android:hint="Wprowadź lokalizacje"/>
         <Button
             android:id="@+id/show_button"
+            android:fontFamily="sans-serif-medium"
             android:backgroundTint="@color/better_orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pokaż"
+            android:text="@string/search"
             android:autoSizeTextType="uniform"/>
 
     </LinearLayout>
@@ -45,6 +46,7 @@
             android:id="@+id/fetchData"
             android:backgroundTint="@color/better_orange"
             android:text="@string/fetchData"
+            android:fontFamily="sans-serif-medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -53,6 +55,7 @@
         <Button
             android:id="@+id/deleteCity"
             android:backgroundTint="@color/red"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/deleteCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

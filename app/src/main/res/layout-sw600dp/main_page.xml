@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="@drawable/day_weather_background"
+    android:background="@drawable/main_menu_background"
     >
 
     <LinearLayout
@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/cyan"
+            android:backgroundTint="@color/orange"
+            android:fontFamily="sans-serif-medium"
             android:text="Szukaj"
             android:autoSizeTextType="uniform"/>
 
@@ -52,7 +53,8 @@
         >
         <Button
             android:id="@+id/fetchData"
-            android:backgroundTint="@color/cyan"
+            android:backgroundTint="@color/orange"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/fetchData"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,7 +63,8 @@
             />
         <Button
             android:id="@+id/deleteCity"
-            android:backgroundTint="@color/orange"
+            android:fontFamily="sans-serif-medium"
+            android:backgroundTint="@color/red"
             android:text="@string/deleteCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
