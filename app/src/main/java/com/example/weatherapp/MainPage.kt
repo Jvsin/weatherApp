@@ -515,7 +515,7 @@ class MainPage : AppCompatActivity() {
         val tempUnits = arrayOf("Celsjusze", "Kelviny", "Farenhajty")
         val adapterTemp = ArrayAdapter(this, android.R.layout.simple_spinner_item, tempUnits)
         tempSpinner.adapter = adapterTemp
-
+//        var initialPosition = Temperatures.CELSIUS
         var initialPosition = when (sett.first) {
             Temperatures.KELVINS -> 1
             Temperatures.FAHRENHEITS -> 2
@@ -587,10 +587,10 @@ class MainPage : AppCompatActivity() {
                 allCities?.forEachIndexed{ id, location ->
                     fetchWeather(location)
                     fetchForecast(location)
-                    Log.v("TIMER"," pobrał: " +  location)
+                    Log.v("TIMER"," Main page pobrał: " +  location)
                 }
             }
-        },0,  60000 * 10
+        },0,  10000
         )
     }
 

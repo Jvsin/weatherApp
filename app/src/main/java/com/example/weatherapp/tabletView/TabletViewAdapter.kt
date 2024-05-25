@@ -229,7 +229,7 @@ class TabletViewAdapter(private val activity: FragmentActivity, loc: String, tem
                 loadWeatherData()
                 Log.v("TIMER: aktualizacja dla: ", location)
             }
-        },0,  10000 * 15
+        },0,  1000
         )
     }
 }

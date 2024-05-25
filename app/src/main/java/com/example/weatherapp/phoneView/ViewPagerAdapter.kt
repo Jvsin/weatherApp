@@ -227,9 +227,9 @@ class ViewPagerAdapter(private val activity: FragmentActivity, loc: String, temp
             override fun run() {
                 loadForecastData()
                 loadWeatherData()
-                Log.v("TIMER:", " aktualizacja dla: " + location)
+                Log.v("TIMER:", " aktualizacja w aktywnosci dla: " + location)
             }
-        },0,  10000 * 15
+        },0,  1000
         )
     }
 }

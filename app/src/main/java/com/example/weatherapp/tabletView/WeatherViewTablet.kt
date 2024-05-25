@@ -31,6 +31,7 @@ class WeatherViewTablet : AppCompatActivity() {
     private var forecast: forecastClass? = null
     private var tempUnit: Temperatures = Temperatures.CELSIUS
     private var distUnit: Distance = Distance.METERS
+    val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +61,8 @@ class WeatherViewTablet : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
+//        this.finish()
+        timer.cancel()
     }
 
     private fun addFragment(containerId: Int, fragment: Fragment) {
@@ -239,14 +242,14 @@ class WeatherViewTablet : AppCompatActivity() {
     }
 
     private fun setTimer() {
-        val timer = Timer()
+//        timer = Timer()
         timer.schedule(object : TimerTask(){
             override fun run() {
                 loadForecastData()
                 loadWeatherData()
                 Log.v("TIMER: aktualizacja dla: ", location)
             }
-        },0,  10000 * 15
+        },0,  1000
         )
     }
 
